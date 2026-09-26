@@ -1,0 +1,130 @@
+macro	rendered	source_file	field	raw_value
+SOneMinimaxTestWorstMean	0.857	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_method.minimax_rel.test_worst_rel.mean	0.8574992618029383
+SOneMinimaxCalWorstMean	0.472	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_method.minimax_rel.cal_worst_rel.mean	0.47173605424992626
+SOneMinimaxTestWorstSeedA	0.713	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_seed_rows.0[method=minimax_rel].eval.summary.test.worst_rel	0.713012417209712
+SOneMinimaxTestWorstSeedB	0.802	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_seed_rows.1[method=minimax_rel].eval.summary.test.worst_rel	0.8024353706993057
+SOneMinimaxTestWorstSeedC	1.057	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_seed_rows.2[method=minimax_rel].eval.summary.test.worst_rel	1.0570499974997973
+SOneUniformTestWorstMean	0.685	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_method.wrrr_uniform_rel.test_worst_rel.mean	0.6854198044554969
+SOneUniformCalWorstMean	0.601	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_method.wrrr_uniform_rel.cal_worst_rel.mean	0.6007770832240333
+SOneUniformTestWorstSeedA	0.642	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_seed_rows.0[method=wrrr_uniform_rel].eval.summary.test.worst_rel	0.6422859934200842
+SOneUniformTestWorstSeedB	0.660	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_seed_rows.1[method=wrrr_uniform_rel].eval.summary.test.worst_rel	0.6603630222068865
+SOneUniformTestWorstSeedC	0.754	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_seed_rows.2[method=wrrr_uniform_rel].eval.summary.test.worst_rel	0.7536103977395201
+SOneWall	58.1	runs/cpu_synthetic_layer_fixture_20260926T152312Z/manifest.json	wall_time_s	58.14544041499994
+SOneK	4	configs/cpu_synthetic.json	k	4
+CfgK	4	configs/cpu_synthetic.json	synthetic.n_tasks	4
+CfgDin	16	configs/cpu_synthetic.json	synthetic.d_in	16
+CfgDout	12	configs/cpu_synthetic.json	synthetic.d_out	12
+CfgLoraRank	4	configs/cpu_synthetic.json	synthetic.lora_rank	4
+CfgNcal	32	configs/cpu_synthetic.json	synthetic.n_cal	32
+CfgNdev	64	configs/cpu_synthetic.json	synthetic.n_dev	64
+CfgNtest	512	configs/cpu_synthetic.json	synthetic.n_test	512
+CfgR	4	configs/cpu_synthetic.json	k	4
+CfgGains	1, 1, 0.6, 1.6	configs/cpu_synthetic.json	synthetic.adapter_gains	'1, 1, 0.6, 1.6'
+CfgDecay	0.8	configs/cpu_synthetic.json	synthetic.cov_decay	0.8
+CfgRho	0.5	configs/cpu_synthetic.json	synthetic.shared_rho	0.5
+CfgNTeachers	3	configs/p2_stage2_moment_normalizer_diag.json	len(fixed_from_fixture.teacher_seeds)	3
+CfgNResamples	3	configs/p2_stage2_moment_normalizer_diag.json	len(calibration_resample_seeds)	3
+CfgNewCells	9	configs/p2_stage2_moment_normalizer_diag.json	teachers x resamples	9
+CfgMCSamples	20000	configs/p2_stage2_moment_normalizer_diag.json	monte_carlo_check.n_samples	20000
+CfgPresentThr	0.02	configs/p2_stage2_moment_normalizer_diag.json	decision_rules.problem_present (threshold +0.02, parsed from text)	0.02
+CfgDualIters	300	configs/cpu_synthetic.json	dual.iters	300
+CfgPolishIters	200	configs/cpu_synthetic.json	dual.polish_iters	200
+STwoCellsOK	78	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	cell_status_counts.OK	78
+STwoCellsTotal	78	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	sum(cell_status_counts)	78
+STwoCPU	285.8	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/manifest.json	cpu_time_s	285.75611718000005
+STwoWall	288.5	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/manifest.json	wall_time_s	288.50494788699996
+STwoRSS	46.9	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/manifest.json	peak_rss_bytes/2^20	46.87109375
+STwoCPUCap	1800	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/manifest.json	caps.RLIMIT_CPU[0]	1800
+STwoCommit	06947af	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/manifest.json	git.commit	'06947af'
+STwoMCN	12	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	len(mc_moment_check)	12
+STwoMCWorstZ	3.38	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	max(mc_moment_check[].worst_abs_z)	3.383292657683081
+STwoNFits	39	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.n_minimax_fits	39
+STwoMaxGapRel	2.0\times10^{-9}	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.max_gap_rel	'2.0\\times10^{-9}'
+STwoMaxGDisc	2.5\times10^{-15}	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.max_g_rel_discrepancy_vs_izenman	'2.5\\times10^{-15}'
+STwoMaxUBDisc	2.8\times10^{-15}	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.max_ub_rel_discrepancy_raw	'2.8\\times10^{-15}'
+STwoMaxRankRatio	2.0\times10^{-16}	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.max_M_sigma_k1_over_sigma_1	'2.0\\times10^{-16}'
+STwoMinLambda	0.130	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.min_lambda	0.12979653279573614
+STwoMaxCond	19.3	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	bound_audit.max_S_cond	19.34322309887776
+STwoMinSvGap	0.011	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	min over minimax rows of (audit.whitened_sigma_k - audit.whitened_sigma_k_plus_1)/audit.whitened_sigma_k	0.010972388172247965
+STwoNRefined	9	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	count(audit.refine != 'skipped')	9
+STwoDeltaEE	+0.007	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.mean_delta	'+0.007'
+STwoVerdictEE	AMBIGUOUS	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.verdict	'AMBIGUOUS'
+STwoDeltaSDEE	0.078	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	stdev(arms.emp_moment__emp_norm.cells)	0.07809809569121108
+STwoDeltaEETA	$-$0.041	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.teacher_mean_delta.0	'$-$0.041'
+STwoOrigDeltaEETA	+0.069	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.orig_seen_draw.0.delta	'+0.069'
+STwoDeltaEETB	$-$0.014	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.teacher_mean_delta.1	'$-$0.014'
+STwoOrigDeltaEETB	+0.113	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.orig_seen_draw.1.delta	'+0.113'
+STwoDeltaEETC	+0.075	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.teacher_mean_delta.2	'+0.075'
+STwoOrigDeltaEETC	+0.301	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__emp_norm.orig_seen_draw.2.delta	'+0.301'
+STwoDeltaEP	+0.039	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.mean_delta	'+0.039'
+STwoVerdictEP	PROBLEM\_PRESENT	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.verdict	'PROBLEM\\_PRESENT'
+STwoDeltaSDEP	0.082	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	stdev(arms.emp_moment__pop_norm.cells)	0.0815463674521229
+STwoDeltaEPTA	+0.034	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.teacher_mean_delta.0	'+0.034'
+STwoOrigDeltaEPTA	$-$0.053	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.orig_seen_draw.0.delta	'$-$0.053'
+STwoDeltaEPTB	$-$0.002	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.teacher_mean_delta.1	'$-$0.002'
+STwoOrigDeltaEPTB	+0.177	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.orig_seen_draw.1.delta	'+0.177'
+STwoDeltaEPTC	+0.086	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.teacher_mean_delta.2	'+0.086'
+STwoOrigDeltaEPTC	+0.173	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.emp_moment__pop_norm.orig_seen_draw.2.delta	'+0.173'
+STwoDeltaPE	$-$0.025	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.mean_delta	'$-$0.025'
+STwoVerdictPE	PROBLEM\_ABSENT	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.verdict	'PROBLEM\\_ABSENT'
+STwoDeltaSDPE	0.043	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	stdev(arms.pop_moment__emp_norm.cells)	0.04338345549674243
+STwoDeltaPETA	$-$0.041	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.teacher_mean_delta.0	'$-$0.041'
+STwoOrigDeltaPETA	$-$0.009	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.orig_seen_draw.0.delta	'$-$0.009'
+STwoDeltaPETB	$-$0.025	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.teacher_mean_delta.1	'$-$0.025'
+STwoOrigDeltaPETB	$-$0.050	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.orig_seen_draw.1.delta	'$-$0.050'
+STwoDeltaPETC	$-$0.010	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.teacher_mean_delta.2	'$-$0.010'
+STwoOrigDeltaPETC	+0.117	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__emp_norm.orig_seen_draw.2.delta	'+0.117'
+STwoDeltaPP	$-$0.093	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__pop_norm.mean_delta	'$-$0.093'
+STwoVerdictPP	PROBLEM\_ABSENT	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__pop_norm.verdict	'PROBLEM\\_ABSENT'
+STwoDeltaPPTA	$-$0.066	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__pop_norm.teacher_mean_delta.0	'$-$0.066'
+STwoDeltaPPTB	$-$0.137	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__pop_norm.teacher_mean_delta.1	'$-$0.137'
+STwoDeltaPPTC	$-$0.076	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	arms.pop_moment__pop_norm.teacher_mean_delta.2	'$-$0.076'
+STwoOrigMinimaxSampleTA	0.713	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,draw=orig_seen,arm=emp_moment__emp_norm,method=minimax_rel].max(test_rel_per_task_PREVIOUSLY_SEEN)	0.713012417209712
+STwoOrigMinimaxPopTA	0.726	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,draw=orig_seen,arm=emp_moment__emp_norm,method=minimax_rel].F_pop	0.7260216560834444
+STwoPPMinimaxTA	0.491	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,draw=all_draws,arm=pop_moment__pop_norm,method=minimax_rel].F_pop	0.4905961658148195
+STwoOrigUniformSampleTA	0.642	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,draw=orig_seen,arm=emp_moment__emp_norm,method=wrrr_uniform_rel].max(test_rel_per_task_PREVIOUSLY_SEEN)	0.6422859934200842
+STwoOrigUniformPopTA	0.657	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,draw=orig_seen,arm=emp_moment__emp_norm,method=wrrr_uniform_rel].F_pop	0.6567054827385713
+STwoPPUniformTA	0.557	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,draw=all_draws,arm=pop_moment__pop_norm,method=wrrr_uniform_rel].F_pop	0.5568272392025857
+STwoOrigMinimaxSampleTB	0.802	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,draw=orig_seen,arm=emp_moment__emp_norm,method=minimax_rel].max(test_rel_per_task_PREVIOUSLY_SEEN)	0.8024353706993057
+STwoOrigMinimaxPopTB	0.768	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,draw=orig_seen,arm=emp_moment__emp_norm,method=minimax_rel].F_pop	0.7679975673549393
+STwoPPMinimaxTB	0.520	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,draw=all_draws,arm=pop_moment__pop_norm,method=minimax_rel].F_pop	0.5204763008712222
+STwoOrigUniformSampleTB	0.660	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,draw=orig_seen,arm=emp_moment__emp_norm,method=wrrr_uniform_rel].max(test_rel_per_task_PREVIOUSLY_SEEN)	0.6603630222068865
+STwoOrigUniformPopTB	0.655	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,draw=orig_seen,arm=emp_moment__emp_norm,method=wrrr_uniform_rel].F_pop	0.6549517984519523
+STwoPPUniformTB	0.658	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,draw=all_draws,arm=pop_moment__pop_norm,method=wrrr_uniform_rel].F_pop	0.6579362966504553
+STwoOrigMinimaxSampleTC	1.057	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,draw=orig_seen,arm=emp_moment__emp_norm,method=minimax_rel].max(test_rel_per_task_PREVIOUSLY_SEEN)	1.0570499974997973
+STwoOrigMinimaxPopTC	1.081	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,draw=orig_seen,arm=emp_moment__emp_norm,method=minimax_rel].F_pop	1.0814011735587745
+STwoPPMinimaxTC	0.597	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,draw=all_draws,arm=pop_moment__pop_norm,method=minimax_rel].F_pop	0.5972550505047327
+STwoOrigUniformSampleTC	0.754	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,draw=orig_seen,arm=emp_moment__emp_norm,method=wrrr_uniform_rel].max(test_rel_per_task_PREVIOUSLY_SEEN)	0.7536103977395201
+STwoOrigUniformPopTC	0.780	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,draw=orig_seen,arm=emp_moment__emp_norm,method=wrrr_uniform_rel].F_pop	0.7804099987823173
+STwoPPUniformTC	0.673	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,draw=all_draws,arm=pop_moment__pop_norm,method=wrrr_uniform_rel].F_pop	0.6728836007488895
+STwoOptFitEEMinimax	0.497	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__emp_norm,method=minimax_rel].fit_objective_max	0.49674329098848546
+STwoOptPopEEMinimax	0.672	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__emp_norm,method=minimax_rel].F_pop	0.6718668156241883
+STwoOptGapEEMinimax	+0.175	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	difference of the two above	'+0.175'
+STwoOptFitEEUniform	0.606	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__emp_norm,method=wrrr_uniform_rel].fit_objective_max	0.6056880493534493
+STwoOptPopEEUniform	0.665	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__emp_norm,method=wrrr_uniform_rel].F_pop	0.6653504523953977
+STwoOptGapEEUniform	+0.060	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	difference of the two above	'+0.060'
+STwoOptFitEPMinimax	0.517	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__pop_norm,method=minimax_rel].fit_objective_max	0.5172190380694554
+STwoOptPopEPMinimax	0.738	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__pop_norm,method=minimax_rel].F_pop	0.7376033404744935
+STwoOptGapEPMinimax	+0.220	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	difference of the two above	'+0.220'
+STwoOptFitEPUniform	0.622	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__pop_norm,method=wrrr_uniform_rel].fit_objective_max	0.6222982951960098
+STwoOptPopEPUniform	0.699	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=emp_moment__pop_norm,method=wrrr_uniform_rel].F_pop	0.6986167279549282
+STwoOptGapEPUniform	+0.076	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	difference of the two above	'+0.076'
+STwoOptFitPEMinimax	0.513	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=pop_moment__emp_norm,method=minimax_rel].fit_objective_max	0.5133268935115828
+STwoOptPopPEMinimax	0.658	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=pop_moment__emp_norm,method=minimax_rel].F_pop	0.6580588189277963
+STwoOptGapPEMinimax	+0.145	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	difference of the two above	'+0.145'
+STwoOptFitPEUniform	0.612	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=pop_moment__emp_norm,method=wrrr_uniform_rel].fit_objective_max	0.611812552109435
+STwoOptPopPEUniform	0.684	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	mean over new draws of rows[arm=pop_moment__emp_norm,method=wrrr_uniform_rel].F_pop	0.6835038995627978
+STwoOptGapPEUniform	+0.072	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	difference of the two above	'+0.072'
+STwoNormRatioMin	0.72	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	min emp/pop normalizer_used ratio (emp_moment__emp_norm vs pop_moment__pop_norm)	0.7158297828953408
+STwoNormRatioMax	1.73	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	max of the same ratio	1.7325791184690447
+STwoPPLambdaTwoTA	0.165	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=0,arm=pop_moment__pop_norm,method=minimax_rel].audit.lambda_star[2]	0.1652263713833165
+STwoPPLambdaTwoTB	0.169	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=1,arm=pop_moment__pop_norm,method=minimax_rel].audit.lambda_star[2]	0.16879061960253358
+STwoPPLambdaTwoTC	0.188	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	rows[teacher=2,arm=pop_moment__pop_norm,method=minimax_rel].audit.lambda_star[2]	0.18767817466913297
+AdmNAdapters	4	runs/p2_stage2_adapter_admission_20260926T155226Z/admission.json	len(adapters)	4
+AdmBaseSha	7bcac57	runs/p2_stage2_adapter_admission_20260926T155226Z/admission.json	base_model.current_sha	'7bcac57'
+AdmLoraR	16	runs/p2_stage2_adapter_admission_20260926T155226Z/admission.json	adapters.*.r (identical for all adapters)	16
+AdmCoLAScore	69.1	runs/p2_stage2_adapter_admission_20260926T155226Z/admission.json	publisher_reported_lora16_scores_on_own_task.cola.lora (publisher-reported, not reproduced)	69.1
+STwoMinimaxCPUMedian	3.7	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	median(rows[method=minimax_rel].cpu_s) (includes bound audit)	3.6746411770000122
+STwoMinimaxCPUMax	19.8	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	max(rows[method=minimax_rel].cpu_s)	19.760664923000007
+STwoUniformCPUMedianMs	8	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	1000*median(rows[method=wrrr_uniform_rel].cpu_s)	7.9985349999986965
+SOneMinimaxRawMean	0.857499	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_method.minimax_rel.test_worst_rel.mean	0.8574992618029383

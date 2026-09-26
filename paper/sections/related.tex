@@ -1,0 +1,48 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Merging task updates.} Task arithmetic adds scaled task vectors
+\citep{ilharco2022taskarith}, and TIES-Merging resolves sign and magnitude conflicts
+\citep{yadav2023ties}. RegMean minimises the summed squared difference of layer outputs on
+calibration inputs in closed form \citep{jin2023regmean}. RegMean++ changes where those inputs
+come from \citep{nguyen2025regmeanpp}. Several methods for LoRA adapters work with the effective
+update $B_kA_k$ rather than with its factors:
+\begin{itemize}
+\item KnOTS aligns updates through a joint SVD \citep{stoica2024knots};
+\item Core Space merges in a lossless reduced basis \citep{panariello2025core};
+\item Compress-then-Merge produces a rank-$r$ adapter by construction from weights alone
+\citep{he2026ctm};
+\item budget-aware selection allocates a global rank budget with a data-free proxy
+\citep{amballa2026budget}.
+\end{itemize}
+Singular-vector methods address interference between tasks \citep{gargiulo2025tsv,marczak2025isoc}.
+Calibration-aware low-rank variants exist in partial forms: LoRM fixes one factor
+\citep{salami2024lorm}, ESM truncates each task separately \citep{li2026esm}, and IterIS uses
+per-task weights \citep{chen2024iteris}. A related line compresses many adapters for serving
+without merging them \citep{bruelgabrielsson2024compress}. None of the works we checked optimise a
+max-over-tasks functional error under a rank constraint. In our fixed-weight baseline, the
+$S_\lambda^{1/2}$-whitened truncation is a direct application of reduced-rank regression, and we
+do not claim it as a contribution.
+
+\paragraph{Multi-objective and worst-case merging.} Pareto Merging learns preference-conditioned
+merges with a smooth Tchebycheff scalarisation \citep{chen2024pareto}, and MAP approximates Pareto
+fronts over merging coefficients \citep{li2024map}. \citet{cao2026collapse} study task-level merging
+collapse and give a rate--distortion bound on worst-case hidden-state distortion. For linear models,
+functional distortion measured with the input second moment is the distortion used in
+rate--distortion analyses of compression \citep{gao2018ratedistortion}.
+
+\paragraph{Minimax low-rank approximation.} With identity targets our objective is min--max
+reconstruction fair PCA. The relevant known results are:
+\begin{itemize}
+\item a semidefinite relaxation that solves the two-group case exactly and has a gap for three
+groups \citep{samadi2018fairpca,tantipongpipat2019multicriteria};
+\item hardness of approximating socially fair low-rank approximation \citep{song2024socially};
+\item distributionally robust and worst-case PCA \citep{wang2025stablepca,fries2026worstcase}.
+\end{itemize}
+The multiplicative-weights scheme with an eigenvector inner step in \citet{samadi2018fairpca}, and
+the exponentiated group weights of Group DRO \citep{sagawa2019groupdro}, have the same structure
+as our dual ascent. The fixed-weight subproblem is reduced-rank regression
+\citep{izenman1975reduced}, solved by an Eckart--Young truncation \citep{eckart1936approximation}
+in a whitened metric. General elementwise-weighted low-rank approximation has no such closed form
+\citep{srebro2003weighted}. Zero duality gap without a rank constraint follows from Sion's minimax
+theorem \citep{sion1958minimax}.

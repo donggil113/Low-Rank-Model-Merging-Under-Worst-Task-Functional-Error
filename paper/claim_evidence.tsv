@@ -1,0 +1,39 @@
+claim_id	claim	manuscript_location	evidence_type	source	verification_status
+C01	Fixed-weight subproblem is reduced-rank regression with closed form W_lambda	Sec.4.1 Prop.1; App.A	known result + implementation tests	izenman1975reduced (Crossref metadata); tests/test_wrrr.py (Izenman raw, grid, ALS references)	KNOWN_RESULT; FULL_TEXT_UNVERIFIED(Izenman); IMPLEMENTATION_TEST_PASS
+C02	Uniqueness requires A_lambda PD and sigma_r > sigma_r+1	Sec.4.1; App.A	standard proof (Eckart-Young)	paper/appendix.tex; eckart1936approximation (Crossref metadata)	PROOF_WRITTEN_BY_AI; HUMAN_REVIEW_PENDING
+C03	Weak duality g(lambda) <= OPT <= F(W)	Sec.4.2 eq.3	standard	paper/sections/analysis.tex	STANDARD
+C04	Published gap instance: relaxation 7/4 vs exact 26/17; reproduced	Sec.4.2; App.B	literature + unit test	tantipongpipat2019multicriteria Lemma 6.2 (arXiv HTML read by main agent); tests/test_minimax.py::test_published_nonzero_gap_instance	FULL_TEXT_READ_SELF; TEST_PASS
+C05	Two-group identity-target case has zero gap	App.B	literature + unit test	tantipongpipat2019multicriteria Thm 1.2 and Sec.2 (read by main agent); tests/test_minimax.py::test_two_group_projection_case_has_zero_gap	FULL_TEXT_READ_SELF; TEST_PASS
+C06	Zero gap without rank constraint (Sion)	Sec.4.2	literature + unit test	sion1958minimax (Crossref metadata); tests/test_minimax.py::test_full_rank_convex_case_closes_gap	FULL_TEXT_UNVERIFIED(Sion); TEST_PASS
+C07	Prop.2: zero gap + unique Lagrangian minimiser => unique primal optimum	Sec.4.2; App.A	standard proof	paper/appendix.tex	PROOF_WRITTEN_BY_AI; HUMAN_REVIEW_PENDING
+C08	Lemma 1 perturbation bound (spectral-norm inequality)	Sec.4.3; App.A	standard proof	paper/appendix.tex	PROOF_WRITTEN_BY_AI; HUMAN_REVIEW_PENDING
+C09	Lemma 2 uniform deviation 2*delta+eps	Sec.4.3; App.A	standard proof	paper/appendix.tex	PROOF_WRITTEN_BY_AI; HUMAN_REVIEW_PENDING
+C10	Corollary 1 on bounded analysis set; solver not norm-bounded	Sec.4.3; App.A	proof + code reading	paper/appendix.tex; src/lowrank_merge/minimax.py (no norm constraint)	PROOF_WRITTEN_BY_AI; HUMAN_REVIEW_PENDING
+C11	Lemma 3 estimated normalisers with d_hat >= d_min > 0	Sec.4.3; App.A	proof	paper/appendix.tex	PROOF_WRITTEN_BY_AI; HUMAN_REVIEW_PENDING
+C12	Stage-1 means: minimax test worst 0.857 vs uniform 0.685; calibration 0.472 vs 0.601	Intro; Sec.5.1	raw result	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json per_method.*	RAW_DERIVED (paper/generated/provenance.tsv)
+C13	0.713/0.802/1.057 are minimax test-sample worst; 0.726/0.768/1.081 are the same solutions on population F	Sec.5.1 Table 1; App.D	raw fields	stage-1 raw_log summary.test.worst_rel; stage-2 rows[orig_seen,emp_moment__emp_norm,minimax_rel].test_rel_per_task_PREVIOUSLY_SEEN and F_pop	RAW_DERIVED; CORRECTIONS.md #3
+C14	Stage-1 and stage-2 fits on the original draw are bit-identical	Table 1 caption	hash comparison	stage-1 raw_log M (hashed) vs stage-2 rows M_sha256	VERIFIED_THIS_SESSION (6/6 matches)
+C15	Numerical audit: gap <= 2.0e-9, reference agreement <= 2.5e-15, rank ok, lambda interior, cond <= 19.3, sv gap >= 0.011	Abstract; Sec.5.2 Table 2	raw result	stage-2 results.json bound_audit and rows[].audit	RAW_DERIVED; FLOAT_NOT_CERTIFICATE
+C16	2x2 paired deltas and pre-registered verdicts	Abstract; Sec.5.3 Table 3 Fig.1	raw result	stage-2 results.json arms.*	RAW_DERIVED
+C17	Formal outcome CAUSE_UNDETERMINED	Abstract; Sec.5.3; Conclusion	pre-registered rule applied	configs/p2_stage2_moment_normalizer_diag.json decision_rules.attribution; stage-2 arms verdicts	RULE_APPLIED
+C18	Moment-estimation noise is the most plausible reading	Sec.5.3; Discussion	interpretation of oracle substitution	stage-2 arms (pop-moment arms absent)	HYPOTHESIS_NOT_ESTABLISHED
+C19	Minimax calibration optimism larger than uniform	Abstract; Sec.5.4 Table 4	raw result	stage-2 rows fit_objective_max vs F_pop (new draws)	RAW_DERIVED
+C20	Normaliser ratio range at n=32	Sec.5.4	raw result	stage-2 rows normalizer_used	RAW_DERIVED
+C21	Pop/Pop win follows from optimising the evaluated objective, not generalisation	Sec.5.3	logical argument	stage-2 pop_pop_consistency (fit_objective_equals_eval ~1e-15)	ARGUMENT + RAW_DERIVED
+C22	Generator has zero mean and S_k = L_k L_k^T; MC check passed	Sec.3	code reading + Monte Carlo	src/lowrank_merge/synthetic.py; src/lowrank_merge/population.py; stage-2 mc_moment_check	CODE_READ_SELF; MC_CHECK_PASS
+C23	Uniform WRRR kept as primary baseline	Discussion; Conclusion	decision	STATUS.md	DECISION
+C24	Adapter repos carry no license tag	Discussion; App.E	metadata	runs/p2_stage2_adapter_admission_20260926T155226Z/raw/api_*.json cardData	METADATA_READ_SELF
+C25	Base-model revision used for training not recorded	Discussion; App.E	metadata	runs/p2_stage2_adapter_admission_20260926T155226Z/raw/adapter_config_*.json revision=null	METADATA_READ_SELF
+C26	Training/checkpoint-selection split undocumented	Discussion; App.E	absence of evidence	model cards (template) + fusion_bench HEAD 54c9e8c search	METADATA_READ_SELF; ABSENCE_NOT_PROOF
+C27	Publisher evaluates on GLUE validation	Discussion; App.E	code reading	fusion_bench config/taskpool/flan-t5_glue_text_generation.yaml @54c9e8c	CODE_READ_SELF
+C28	Publisher metric is exact-match accuracy of generated label words	Discussion	code reading	fusion_bench fusion_bench/compat/taskpool/flan_t5_glue_text_generation.py @54c9e8c	CODE_READ_SELF
+C29	Official GLUE metrics: CoLA Matthews corr.; MRPC acc./F1; RTE and SST-2 acc.	Discussion	literature	wang2018glue Table 1 (ar5iv HTML read by main agent)	FULL_TEXT_READ_SELF(Table 1)
+C30	Publisher reports LoRA-CoLA at the same CoLA score as the base (69.1)	App.E	publisher documentation	fusion_bench docs/modelpool/flan-t5_generation.md @54c9e8c; admission.json	PUBLISHER_REPORTED_NOT_REPRODUCED
+C31	KnOTS with linear averaging equals task arithmetic	Related (implicit); tests	literature + test	stoica2024knots Sec.5.1 (subagent); tests/test_gauge_accounting.py::test_knots_ta_equals_task_arithmetic	FULL_TEXT_READ_SUBAGENT; TEST_PASS
+C32	CtM gives rank-r adapter by construction from weights alone	Related	literature	he2026ctm abstract (main agent) + method (subagent)	ABSTRACT_SELF; FULL_TEXT_READ_SUBAGENT
+C33	Budget-aware LoRA merging allocates global rank budget with data-free proxy	Related	literature	amballa2026budget abstract (main agent)	ABSTRACT_SELF
+C34	Cao et al. rate-distortion worst-case distortion bound	Related	literature	cao2026collapse abstract (main agent) + Sec.3.4.1 (subagent)	ABSTRACT_SELF; FULL_TEXT_READ_SUBAGENT
+C35	Characterisations of RegMean, RegMean++, Core Space, TSV, Iso-C, LoRM, ESM, IterIS, Pareto Merging, MAP, Group DRO, fair-PCA MW scheme, Song et al. hardness, StablePCA, worst-case LRA, Gao et al.	Related	literature summaries	PRIOR_ART.md (subagent reports)	FULL_TEXT_READ_SUBAGENT or PARTIAL; not rechecked by main agent
+C36	None of the checked works optimise max-over-tasks functional error under a rank constraint	Related	search-based	PRIOR_ART.md sec.3 (A6)	SEARCH_BASED_NOT_EXHAUSTIVE; NOT_A_NOVELTY_CLAIM
+C37	Venue fields only where arXiv comment states them	references.bib	metadata extraction	paper/bib_sources/arxiv_meta.json; paper/tools/make_bib.py	MACHINE_EXTRACTED
+C38	No human review of draft	AI use statement	status	PAPER_STATUS.md	HUMAN_REVIEW_PENDING

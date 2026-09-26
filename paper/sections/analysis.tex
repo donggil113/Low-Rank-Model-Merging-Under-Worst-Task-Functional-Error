@@ -1,0 +1,101 @@
+\section{Analysis of the Method under Study}
+\label{sec:analysis}
+
+This section collects what is known about the optimisation problem and adds elementary
+sensitivity bounds. Proofs are in Appendix~\ref{app:proofs}. None of the statements is new; we
+state them in our notation so that the experiments can be read against them.
+
+\subsection{Fixed task weights: reduced-rank regression}
+For $\lambda$ in the simplex $\Delta_K$, the weighted objective is
+$L_\lambda(W)=\sum_k\lambda_kE_k(W;S_k,d_k)=\tr(WA_\lambda W^\top)-2\tr(WC_\lambda^\top)+c_\lambda$,
+where $A_\lambda=\sum_k(\lambda_k/d_k)S_k$ and $C_\lambda=\sum_k(\lambda_k/d_k)D_kS_k$. The output
+side carries the identity weight, so the problem is reduced-rank regression
+\citep{izenman1975reduced}.
+
+\begin{proposition}[known]
+\label{prop:rrr}
+If $A_\lambda\succ0$, then $W_\lambda=[C_\lambda A_\lambda^{-1/2}]_r\,A_\lambda^{-1/2}$ minimises
+$L_\lambda$ over $\Wr$. Here $[\cdot]_r$ is a best rank-$r$ approximation in Frobenius norm. The
+minimiser is unique if and only if $\sigma_r>\sigma_{r+1}$ for the singular values of
+$C_\lambda A_\lambda^{-1/2}$. For $r\ge\min(p,q)$ it is the $\lambda$-weighted RegMean solution
+$C_\lambda A_\lambda^{-1}$.
+\end{proposition}
+
+Positive definiteness of $A_\lambda$ alone does not give uniqueness; the singular-value gap at the
+truncation boundary is also needed. If $A_\lambda$ is singular, the objective does not identify
+$W$ on $\ker A_\lambda$. Our implementation then uses a pseudo-inverse and returns the minimiser
+that vanishes on $\ker A_\lambda$. A ridge term changes the objective, so its value is never used
+as a bound for the original problem.
+
+\subsection{Worst-task objective and a Lagrangian bound}
+Let $\mathrm{OPT}=\min_{W\in\Wr}F(W)$, and define the same quantities for $\Fhat$. Since
+$\max_ka_k=\max_{\lambda\in\Delta_K}\sum_k\lambda_ka_k$, weak duality gives
+\begin{equation}
+g(\lambda)=\min_{W\in\Wr}L_\lambda(W)\le\mathrm{OPT}\le F(W)\quad\text{for all }
+\lambda\in\Delta_K\text{ and }W\in\Wr.
+\label{eq:weakduality}
+\end{equation}
+Here $g$ is concave, and $(E_k(W_\lambda))_k$ is a supergradient at $\lambda$. By
+Proposition~\ref{prop:rrr}, $g(\lambda)$ can be evaluated exactly, so exponentiated-gradient
+ascent on $\lambda$ yields certified lower bounds in exact arithmetic. Any feasible $W$ gives an
+upper bound.
+
+The rank constraint makes the problem non-convex, and the gap can be strictly positive. With
+$D_k=I$ the problem is min--max reconstruction fair PCA. There $g$ equals a semidefinite
+relaxation value, and a published three-group example has relaxation value $7/4$ against an exact
+value of $26/17$ \citep[Lemma~6.2]{tantipongpipat2019multicriteria}. Our test suite reproduces
+both values. Without the rank constraint the gap is zero by Sion's theorem
+\citep{sion1958minimax}.
+
+\begin{proposition}[standard]
+\label{prop:unique}
+If $g(\lambda^\star)=\mathrm{OPT}$ and $L_{\lambda^\star}$ has a unique minimiser $W_{\lambda^\star}$
+over $\Wr$, then $W_{\lambda^\star}$ is the unique minimiser of $F$ over $\Wr$.
+\end{proposition}
+
+In floating point we observe only a small gap and an estimated $\lambda^\star$. Propositions~
+\ref{prop:rrr}--\ref{prop:unique} therefore interpret our numerical checks but do not certify
+them rigorously.
+
+\subsection{Sensitivity to the calibration moments}
+Throughout, $\Delta_k=S_k-\Shat_k$ is symmetric.
+
+\begin{lemma}[fixed normaliser; spectral-norm inequality]
+\label{lem:pert}
+For any $W$ and $d>0$,
+$\big|E_k(W;S_k,d)-E_k(W;\Shat_k,d)\big|\le\opnorm{\Delta_k}\,\fnorm{W-D_k}^2/d$.
+\end{lemma}
+
+\begin{lemma}[uniform deviation; standard]
+\label{lem:dev}
+Let $\mathcal W$ be any set and suppose $\sup_{W\in\mathcal W}|F(W)-\Fhat(W)|\le\delta$. If
+$\What\in\mathcal W$ satisfies $\Fhat(\What)\le\inf_{\mathcal W}\Fhat+\epsilon_{\mathrm{opt}}$,
+then $F(\What)-\inf_{\mathcal W}F\le2\delta+\epsilon_{\mathrm{opt}}$.
+\end{lemma}
+
+The rank constraint alone does not bound $\fnorm{W}$. We therefore apply the lemmas to the
+analysis set $\WrB=\{W\in\Wr:\fnorm{W}\le B\}$. Our solver optimises over $\Wr$ and never
+enforces such a bound.
+
+\begin{corollary}
+\label{cor:fixed}
+With fixed normalisers $d_k$ (the Emp/Pop arm),
+$\sup_{\WrB}|F-\Fhat|\le\delta_{\mathrm{fix}}:=\max_k\opnorm{\Delta_k}(B+\fnorm{D_k})^2/d_k$.
+If $\What\in\WrB$ minimises $\Fhat$ over $\Wr$ up to $\epsilon_{\mathrm{opt}}$ and
+$W^\star\in\WrB$, then $F(\What)-F(W^\star)\le2\delta_{\mathrm{fix}}+\epsilon_{\mathrm{opt}}$.
+\end{corollary}
+
+\begin{lemma}[estimated normalisers]
+\label{lem:denom}
+Assume $d_k>0$ and $\dhat_k\ge d_{\min,k}>0$. Then for any $W$,
+\[
+\big|E_k(W;S_k,d_k)-E_k(W;\Shat_k,\dhat_k)\big|\le
+\frac{\opnorm{\Delta_k}}{\dhat_k}\Big(\fnorm{W-D_k}^2+E_k(W;S_k,d_k)\,\fnorm{D_k}^2\Big).
+\]
+The first term is the moment error. The second is the normaliser error, which uses
+$|\dhat_k-d_k|\le\opnorm{\Delta_k}\fnorm{D_k}^2$.
+\end{lemma}
+
+These are deterministic inequalities. We make no probabilistic statement about $\opnorm{\Delta_k}$
+at our sample size, and we do not infer a rate from the observations. Section~\ref{sec:exp}
+checks the inequalities numerically on the recorded instances and reports how loose they are.

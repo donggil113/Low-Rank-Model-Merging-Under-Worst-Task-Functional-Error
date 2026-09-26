@@ -1,0 +1,55 @@
+\section{Introduction}
+\label{sec:intro}
+
+Low-rank adapters \citep{hu2021lora} make it cheap to specialise one base model to many tasks,
+and a growing literature merges several such adapters into a single update without retraining
+\citep{ilharco2022taskarith,yadav2023ties,jin2023regmean,stoica2024knots,he2026ctm}. Two design
+choices recur. First, some methods measure the discrepancy between the merged and the task-specific
+layers on calibration activations rather than in weight space \citep{jin2023regmean,nguyen2025regmeanpp}.
+Second, some fix the rank of the merged update in advance \citep{he2026ctm,amballa2026budget}.
+Merging can also hurt individual tasks badly \citep{cao2026collapse}, and worst-task retention is
+reported as an evaluation metric \citep{he2026ctm}. Taken together, these choices suggest a
+layer-level objective: choose one rank-$r$ update that minimises the largest per-task functional
+error on calibration data. With identity targets this is exactly min--max reconstruction fair PCA
+\citep{samadi2018fairpca,tantipongpipat2019multicriteria}. With fixed task weights it reduces to
+classical reduced-rank regression \citep{izenman1975reduced}.
+
+This paper is about one uncomfortable observation made while instrumenting that objective. In a
+synthetic layer-level fixture with three problem instances, the minimax solution had a lower
+calibration worst-task error than the solution with uniform task weights (\SOneMinimaxCalWorstMean{}
+versus \SOneUniformCalWorstMean{} on average) but a higher held-out worst-task error
+(\SOneMinimaxTestWorstMean{} versus \SOneUniformTestWorstMean). Before this can inform a method, one
+has to know why. The candidates are that the solver failed, that the calibration second moments
+are too noisy, that the per-task normalisers in the relative error are too noisy, or that the
+evaluated objective differs from the optimised one.
+
+We therefore run a diagnostic study rather than propose a method. Our findings are the following.
+\begin{itemize}
+\item \textbf{Optimisation check.} Every minimax fit is bracketed by a Lagrangian lower bound, which
+is computed with an exactly solvable inner problem, and by the achieved worst-task value. The
+relative gaps are at most $\STwoMaxGapRel$ over \STwoNFits{} fits. An independent reduced-rank
+regression computed from raw samples reproduces the inner values to $\STwoMaxGDisc$. On these
+instances this argues against large optimisation error. It is a floating-point check, not a proof
+that the implementation is free of bugs or that the solver is globally optimal in general.
+\item \textbf{Calibration optimism.} On \CfgNewCells{} fresh calibration draws, nested in
+\CfgNTeachers{} problem instances, the minimax solution's fitted worst-task error understates its
+population value by \STwoOptGapEEMinimax{} on average. For the uniform-weight solution the
+understatement is \STwoOptGapEEUniform. On these draws the minimax solution is not better than
+the uniform one on the population worst-task error (mean paired difference \STwoDeltaEE; the
+pre-registered verdict is ambiguous). The larger gap first observed came from one particular
+calibration draw, not from an evaluation artefact.
+\item \textbf{Oracle substitution.} In a pre-registered $2\times2$ design, replacing the
+empirical second moments by their population values removes the average disadvantage.
+Replacing only the normalisers does not. The pattern is consistent with moment-estimation noise,
+but the pre-registered attribution rule is not met, so the cause remains undetermined.
+\item \textbf{Elementary bounds.} We record standard perturbation and uniform-deviation bounds,
+including the case of estimated normalisers. They make the dependence of the excess population
+error on $\opnorm{S_k-\Shat_k}$ explicit. We claim no novelty for them.
+\end{itemize}
+
+\paragraph{Scope.} All results are on a synthetic linear layer whose population moments are known
+in closed form. The objective is layer-local; it is not an end-to-end task loss. We evaluated no
+real adapters. Four public candidates were excluded because their usage terms, their base-model
+revision and their checkpoint-selection split could not be established
+(Appendix~\ref{app:planned}). We make no claim about merging accuracy, and we do not claim novelty
+for the solver components (Section~\ref{sec:related}).

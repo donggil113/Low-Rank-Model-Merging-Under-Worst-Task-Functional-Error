@@ -1,0 +1,135 @@
+\section{Experiments and Observations}
+\label{sec:exp}
+
+All numbers below are generated from the recorded result files by one exporter script
+(Appendix~\ref{app:repro}). Table~\ref{tab:stage1} in the appendix lists all stage-1 methods,
+including the weight-space baselines, which are not discussed further here.
+
+\subsection{The original observation and what its numbers compare}
+\label{sec:orig}
+
+\begin{table}[t]
+\caption{The original calibration draw of each teacher, stage 1 and stage 2. Each column is one
+teacher. The same fitted matrix is evaluated three ways: the test sample (seen during development),
+the exact population objective $F$, and the calibration objective $\Fhat$ it was fitted on. The
+stage-1 and stage-2 fits are bit-identical (matching SHA-256 of the merged matrices).}
+\label{tab:orig}
+\centering\small
+\input{tables/tab_orig_draw.tex}
+\end{table}
+
+Stage~1 reported mean test worst-task errors of \SOneMinimaxTestWorstMean{} for minimax and
+\SOneUniformTestWorstMean{} for uniform WRRR. Table~\ref{tab:orig} separates the comparisons that
+were later conflated in a summary. The triple \SOneMinimaxTestWorstSeedA/\SOneMinimaxTestWorstSeedB/%
+\SOneMinimaxTestWorstSeedC{} is the \emph{minimax} solution on the \emph{test sample}. The triple
+\STwoOrigMinimaxPopTA/\STwoOrigMinimaxPopTB/\STwoOrigMinimaxPopTC{} is the \emph{same} solution
+under the \emph{population} objective. Sample and population agree closely, so the original gap is
+not an artefact of the test sample. On this draw the minimax solution is worse than the uniform
+solution for every teacher under both evaluations. It is also the solution with the lowest
+calibration objective in every column; for minimax the calibration errors of all tasks are
+equalised at the value shown in the ``calibration $\Fhat$'' row.
+
+\subsection{Is the optimiser the problem?}
+
+\begin{table}[t]
+\caption{Numerical audit of the \STwoNFits{} minimax fits in stage~2, by arm. The relative gap is
+$(\mathrm{UB}-\mathrm{LB})/\mathrm{UB}$ on the fitted objective. The second column of numbers
+compares the lower bound with an independent reduced-rank regression computed from raw samples at
+the same $\lambda^\star$. The last three columns are the smallest task weight, the largest
+condition number of $A_{\lambda^\star}$, and the smallest relative singular-value gap at the
+truncation boundary. Floating-point values, not certificates.}
+\label{tab:audit}
+\centering\small
+\resizebox{\linewidth}{!}{\input{tables/tab_audit.tex}}
+\end{table}
+
+Table~\ref{tab:audit} summarises the audit.
+\begin{itemize}
+\item Every fit closes its dual gap to at most $\STwoMaxGapRel$ in relative terms. In
+\STwoNRefined{} fits the primal refinement stage was needed.
+\item The lower bounds agree with the independent raw-data reference to within $\STwoMaxGDisc$.
+\item Every achieved upper bound agrees with a raw-sample re-evaluation to within $\STwoMaxUBDisc$.
+\item All solutions satisfy the rank constraint: $\sigma_{r+1}/\sigma_1\le\STwoMaxRankRatio$.
+\item All $\lambda^\star$ lie in the interior of the simplex (smallest weight \STwoMinLambda).
+\item Each $A_{\lambda^\star}$ is well conditioned (condition number at most \STwoMaxCond).
+\item The smallest relative singular-value gap at the truncation boundary is \STwoMinSvGap.
+\end{itemize}
+This gap is small for some Pop/Emp fits but nonzero, so by Proposition~\ref{prop:rrr} the inner
+minimiser at $\lambda^\star$ is unique on every instance. On these instances a large optimisation
+error therefore does not explain the calibration--population discrepancy. This rules out neither
+every possible implementation bug nor failure on other problems.
+
+\subsection{Oracle substitution: moments versus normalisers}
+
+\begin{table}[t]
+\caption{Paired difference $\Delta=F(\What_{\mathrm{minimax}})-F(\What_{\mathrm{uniform}})$ on
+the population objective; negative values favour minimax. The teacher columns average the
+\CfgNResamples{} fresh draws of that teacher, and the last column averages all \CfgNewCells{}
+nested cells. Pop/Pop does not depend on the draw and is computed once per teacher.}
+\label{tab:2x2}
+\centering\small
+\input{tables/tab_2x2.tex}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\input{figures/fig_paired_2x2.tex}
+\caption{Teacher-level paired comparison on the population worst-task error $F$. For each arm,
+the U (uniform WRRR, circle) and M (minimax, square) values of each teacher are joined by a line,
+using means over the \CfgNResamples{} fresh draws. Lower is better. Per-draw values are in
+Table~\ref{tab:perdraw}.}
+\label{fig:paired}
+\end{figure}
+
+Table~\ref{tab:2x2} and Figure~\ref{fig:paired} give the four arms. The pre-registered verdicts
+are:
+\begin{itemize}
+\item Emp/Emp: \STwoVerdictEE{} (mean $\Delta$ \STwoDeltaEE, sd over cells \STwoDeltaSDEE);
+\item Emp/Pop: \STwoVerdictEP{} (\STwoDeltaEP);
+\item Pop/Emp: \STwoVerdictPE{} (\STwoDeltaPE);
+\item Pop/Pop: \STwoVerdictPP{} (\STwoDeltaPP).
+\end{itemize}
+Three observations follow.
+
+First, the large disadvantage seen on the original draw does not reproduce on average over fresh
+draws. The original draw gave \STwoOrigDeltaEETA, \STwoOrigDeltaEETB{} and \STwoOrigDeltaEETC{}
+for teachers 0, 1 and 2. The fresh draws give teacher means \STwoDeltaEETA, \STwoDeltaEETB{} and
+\STwoDeltaEETC. The draw-to-draw spread is of the same order as the effect.
+
+Second, substituting population moments makes minimax better than uniform on average for both
+choices of normaliser. Substituting population normalisers alone does not: Emp/Pop is worse than
+Emp/Emp. One explanation we have \emph{not} tested is that, when both come from the same draw, the
+moment error and the normaliser error partly cancel in the ratio.
+
+Third, in the Pop/Pop arm the fitted objective \emph{is} the evaluation objective. That minimax
+wins there (for teachers 0, 1 and 2, $F$ is \STwoPPMinimaxTA, \STwoPPMinimaxTB{} and
+\STwoPPMinimaxTC{} against \STwoPPUniformTA, \STwoPPUniformTB{} and \STwoPPUniformTC) is a
+consequence of optimising the right objective. It is not evidence that minimax generalises. It
+does show that the evaluator and the fitted objective are consistent.
+
+The pattern is consistent with moment-estimation noise driving the calibration--population
+discrepancy. The pre-registered attribution rule, however, required the problem to be
+\emph{present} in both empirical-moment arms, and Emp/Emp is ambiguous. The formal outcome is
+therefore \textbf{cause undetermined}. We report the moment-noise reading as a hypothesis
+supported by the oracle substitution, not as an established cause.
+
+\subsection{Calibration optimism is distinct from the numerical gap}
+
+\begin{table}[t]
+\caption{Fitted objective of the returned solution against its population value, averaged over
+the \CfgNewCells{} fresh cells. This is a statistical optimism gap. It is unrelated to the
+numerical UB--LB gap of Table~\ref{tab:audit}, which is at most $\STwoMaxGapRel$ in relative terms.}
+\label{tab:optimism}
+\centering\small
+\input{tables/tab_optimism.tex}
+\end{table}
+
+Table~\ref{tab:optimism} shows that both solutions look better on calibration data than they
+are, and that the minimax solution is more optimistic in every arm that uses a calibration sample.
+For example, in Emp/Emp the minimax understatement is \STwoOptGapEEMinimax, against
+\STwoOptGapEEUniform{} for uniform. This fits the familiar picture that minimising a maximum of
+noisy estimates selects the noise. At \CfgNcal{} samples per task the relative normaliser
+estimates range from \STwoNormRatioMin{} to \STwoNormRatioMax{} times their population values.
+
+The uniform-deviation bounds of Section~\ref{sec:analysis} have not yet been evaluated on these
+instances in this draft version; see Appendix~\ref{app:planned}.

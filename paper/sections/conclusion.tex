@@ -1,0 +1,14 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We instrumented a worst-task, rank-constrained merging objective for linear-layer updates and
+studied why its empirical minimiser looked better on calibration data than on held-out data. On
+the synthetic instances we examined, the optimiser was not the problem: Lagrangian lower bounds,
+achieved values and an independent reference agree to floating-point precision. The fitted
+worst-task objective is nevertheless optimistic, more so for minimax than for uniform task
+weights. On fresh calibration draws minimax did not improve the population worst-task error on
+average. Replacing empirical second moments by population moments removed the disadvantage, and
+replacing the normalisers alone did not. Our pre-registered rule nonetheless leaves the cause
+undetermined. The practical conclusion is modest: at this calibration size a closed-form
+uniform-weight solution remains the baseline to beat. Whether any of this carries over to real
+adapters and task accuracy is open; we did not test it.

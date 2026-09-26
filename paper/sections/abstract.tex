@@ -1,0 +1,22 @@
+\begin{abstract}
+A natural way to merge several low-rank task updates of one linear layer is to choose a single
+rank-$r$ update that minimises the largest per-task functional error measured on calibration
+activations. We study how sensitive this empirical minimax problem is to the calibration sample,
+in a controlled synthetic layer-level setting with \CfgK{} tasks, input dimension \CfgDin{},
+output dimension \CfgDout{}, rank budget $r=\CfgR$ and \CfgNcal{} calibration inputs per task.
+We first check the optimiser. Across \STwoNFits{} minimax fits, the relative gap between a
+Lagrangian lower bound, computed with an exactly solvable weighted reduced-rank regression, and
+the achieved worst-task value is at most $\STwoMaxGapRel$, and an independent raw-data reference
+agrees to within $\STwoMaxGDisc$. These floating-point checks argue against large optimisation
+error on these instances; they are not certificates. The optimised calibration objective is
+nevertheless optimistic: on fresh calibration draws the minimax solution's fitted worst-task
+error (\STwoOptFitEEMinimax{} on average) understates its population value
+(\STwoOptPopEEMinimax), and its population worst-task error is not lower than that of the
+uniform-weight solution on average (mean paired difference \STwoDeltaEE{} over
+\CfgNTeachers{} problem instances $\times$ \CfgNResamples{} nested calibration draws; the
+pre-registered verdict is ambiguous). Replacing the empirical second moments by population
+moments, an oracle that exists only in simulation, removes the average disadvantage, whereas
+replacing only the error normalisers does not. Under our pre-registered attribution rule the
+cause remains undetermined. We state elementary, known perturbation bounds that make the
+dependence on moment error explicit. No real adapters were evaluated.
+\end{abstract}

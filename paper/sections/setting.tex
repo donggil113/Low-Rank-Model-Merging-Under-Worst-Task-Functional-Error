@@ -1,0 +1,69 @@
+\section{Problem and Experimental Setting}
+\label{sec:setting}
+
+\paragraph{Objective.} Consider one linear layer and $K$ tasks. Task $k$ has an adapter with
+effective update $D_k=\tfrac{\alpha}{r_0}B_kA_k\in\R^{p\times q}$. We only ever use $D_k$ and
+never the factors, so every quantity below is invariant under $(B_k,A_k)\mapsto(B_kR,R^{-1}A_k)$.
+Inputs of task $k$ are $x\in\R^q$ with raw second moment $S_k=\E[xx^\top]$, which equals the
+covariance only when $\E[x]=0$. For a merged update $W\in\R^{p\times q}$, a positive semidefinite
+$S$ and a normaliser $d>0$ we write
+\begin{equation}
+E_k(W;S,d)=\frac{\tr\!\big[(W-D_k)\,S\,(W-D_k)^\top\big]}{d}.
+\label{eq:error}
+\end{equation}
+With $S=S_k$, the numerator is the expected squared change of the layer output on task $k$ when
+$D_k$ is replaced by $W$. We use relative errors, in which $d_k=\tr(D_kS_kD_k^\top)$ is the error
+of dropping the adapter. The population and calibration worst-task objectives are
+\begin{equation}
+F(W)=\max_k E_k(W;S_k,d_k),\qquad \Fhat(W)=\max_k E_k(W;\Shat_k,\dhat_k),
+\label{eq:objectives}
+\end{equation}
+where $\Shat_k=X_kX_k^\top/n$ is computed from $n$ calibration inputs and
+$\dhat_k=\tr(D_k\Shat_kD_k^\top)$. The feasible set is $\Wr=\{W:\rank(W)\le r\}$. It is not
+bounded: nothing restricts $\fnorm{W}$.
+
+\paragraph{Methods compared.} Both methods return a rank-$r$ update and use the same calibration
+inputs with task identity. Neither has tuned hyper-parameters.
+\begin{itemize}
+\item \emph{Uniform WRRR} minimises $\frac1K\sum_k E_k(W;\Shat_k,\dhat_k)$ over $\Wr$. This is a
+weighted reduced-rank regression with a closed-form solution (Section~\ref{sec:analysis}).
+\item \emph{Minimax} approximately minimises $\Fhat$ over $\Wr$, using Lagrangian dual ascent with
+exact inner solves followed by monotone primal refinement.
+\end{itemize}
+We report both the lower bound (LB) and the achieved value (UB) for every minimax fit.
+
+\paragraph{Synthetic layer.} The generator is fixed by the configuration of the recorded runs
+(Appendix~\ref{app:repro}): $p=\CfgDout$, $q=\CfgDin$, $K=\CfgK$ tasks, adapter rank
+$r_0=\CfgLoraRank$ and merged rank $r=\CfgR$. Adapter factors mix a shared component (correlation
+$\CfgRho$) with a task-specific component, and task gains are $(\CfgGains)$. Inputs are $x=L_kz$
+with $z\sim\mathcal N(0,I)$, where $L_k$ is a random rotation times a diagonal with decay
+$\CfgDecay^{i/2}$. Hence $\E[x]=0$ and $S_k=L_kL_k^\top$ exactly. Each task has $n=\CfgNcal$
+calibration, \CfgNdev{} development and \CfgNtest{} test inputs. Because $S_k$ is known, $F$ can
+be evaluated exactly as $\fnorm{(W-D_k)L_k}^2/\fnorm{D_kL_k}^2$. A Monte Carlo check with
+\CfgMCSamples{} samples per task confirmed the closed form for all \STwoMCN{} task moments; the
+largest standardised entrywise deviation was \STwoMCWorstZ.
+
+\paragraph{Design.} A \emph{teacher} is one problem instance: its adapters and input
+distributions. Stage~1 ran both methods on \CfgNTeachers{} teachers with one calibration draw each
+and evaluated them on the test sample. Stage~2 was pre-registered before execution (commit
+\texttt{\STwoCommit}). For the same \CfgNTeachers{} teachers it drew \CfgNResamples{} fresh
+calibration sets per teacher, giving \CfgNewCells{} cells nested in teachers. We do not count them
+as \CfgNewCells{} independent experiments. Each fit is run in four arms:
+\begin{itemize}
+\item \emph{Emp/Emp}: empirical moments and empirical normalisers (the deployable setting);
+\item \emph{Emp/Pop} and \emph{Pop/Emp}: one of the two quantities is replaced by its population
+value;
+\item \emph{Pop/Pop}: both are population values.
+\end{itemize}
+Pop/Pop uses no calibration sample and is computed once per teacher. The original, previously
+seen calibration draw is reported separately. Every solution is evaluated on the same population
+objective $F$. The pre-registered decision rules use the paired difference
+$\Delta=F(\What_{\mathrm{minimax}})-F(\What_{\mathrm{uniform}})$:
+\begin{itemize}
+\item \emph{problem present}: mean $\Delta$ over the new cells exceeds $+\CfgPresentThr$ and the
+teacher-level mean $\Delta$ is positive for at least two teachers;
+\item \emph{problem absent}: mean $\Delta\le0$;
+\item \emph{ambiguous}: otherwise.
+\end{itemize}
+Moment noise would be attributed only if the problem were present in both empirical-moment arms
+and absent in both population-moment arms.

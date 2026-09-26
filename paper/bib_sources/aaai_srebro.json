@@ -1,0 +1,12 @@
+{
+ "url": "https://aaai.org/papers/icml03-094-weighted-low-rank-approximations/",
+ "fetched": "2026-09-26",
+ "html_sha256": "4c1955484c97de82a158a4818325846cdcbdbeefcf6c4b6973b63473ea16e20d",
+ "title": "Weighted Low-Rank Approximations",
+ "authors": [
+  "Nathan Srebro",
+  "Tommi Jaakkola"
+ ],
+ "proceedings": "Proceedings of the Twentieth International Conference on Machine Learning",
+ "note": "page numbers not shown on this page; omitted from bib"
+}

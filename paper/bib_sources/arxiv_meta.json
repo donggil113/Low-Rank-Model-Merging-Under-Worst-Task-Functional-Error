@@ -1,0 +1,481 @@
+{
+ "2410.19735": {
+  "title": "Model merging with SVD to tie the Knots",
+  "authors": [
+   "Stoica, George",
+   "Ramesh, Pratik",
+   "Ecsedi, Boglarka",
+   "Choshen, Leshem",
+   "Hoffman, Judy"
+  ],
+  "date": "2024/10/25",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "da88ff24e13bd540e51776180f398baccf15c097f7044b205e3d1d7748796525",
+  "fetched": "2026-09-26"
+ },
+ "2212.09849": {
+  "title": "Dataless Knowledge Fusion by Merging Weights of Language Models",
+  "authors": [
+   "Jin, Xisen",
+   "Ren, Xiang",
+   "Preotiuc-Pietro, Daniel",
+   "Cheng, Pengxiang"
+  ],
+  "date": "2022/12/19",
+  "comments": "ICLR 2023; The code is available at this https URL and this https URL. Fixed typos",
+  "journal_ref": null,
+  "html_sha256": "866dcbee3e1e499e93431e42f16e1f1a19a9974fdaab09544bff31890ae91e6d",
+  "fetched": "2026-09-26"
+ },
+ "2508.03121": {
+  "title": "RegMean++: Enhancing Effectiveness and Generalization of Regression Mean for Model Merging",
+  "authors": [
+   "Nguyen, The-Hai",
+   "Huu-Tien, Dang",
+   "Suzuki, Takeshi",
+   "Nguyen, Le-Minh"
+  ],
+  "date": "2025/08/05",
+  "comments": "Accepted by Transactions on Machine Learning Research",
+  "journal_ref": null,
+  "html_sha256": "754f2b0c415cf9f618f2751ccb18a3ed4ec4986be9c17081664fef15ba1f2aec",
+  "fetched": "2026-09-26"
+ },
+ "2606.03723": {
+  "title": "Compress then Merge: From Multiple LoRAs into One Low-Rank Adapter",
+  "authors": [
+   "He, Zhengbao",
+   "Ding, Ruiqi",
+   "Huang, Zhehao",
+   "Yang, Ruikai",
+   "Li, Tao",
+   "Huang, Xiaolin"
+  ],
+  "date": "2026/06/02",
+  "comments": "Accepted to ICML 2026. Code: this https URL",
+  "journal_ref": null,
+  "html_sha256": "e487cb1d0c08d98fec7f5612213dacb90f5944e4cd2b63a2079af3e88ab62cbc",
+  "fetched": "2026-09-26"
+ },
+ "2509.17786": {
+  "title": "Accurate and Efficient Low-Rank Model Merging in Core Space",
+  "authors": [
+   "Panariello, Aniello",
+   "Marczak, Daniel",
+   "Magistri, Simone",
+   "Porrello, Angelo",
+   "Twardowski, Bartłomiej",
+   "Bagdanov, Andrew D.",
+   "Calderara, Simone",
+   "van de Weijer, Joost"
+  ],
+  "date": "2025/09/22",
+  "comments": "Accepted at 39th Conference on Neural Information Processing Systems (NeurIPS 2025), San Diego, USA",
+  "journal_ref": null,
+  "html_sha256": "9a0e70aaf0025fa1c4fcff11d3782d152c2aa463f308979f72072ce8f417bf35",
+  "fetched": "2026-09-26"
+ },
+ "2412.00081": {
+  "title": "Task Singular Vectors: Reducing Task Interference in Model Merging",
+  "authors": [
+   "Gargiulo, Antonio Andrea",
+   "Crisostomi, Donato",
+   "Bucarelli, Maria Sofia",
+   "Scardapane, Simone",
+   "Silvestri, Fabrizio",
+   "Rodolà, Emanuele"
+  ],
+  "date": "2024/11/26",
+  "comments": "In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition 2025 (CVPR)",
+  "journal_ref": null,
+  "html_sha256": "688384d4c78449d20a767ffb9c8282438fcab535f5992e422603c453fca35239",
+  "fetched": "2026-09-26"
+ },
+ "2502.04959": {
+  "title": "No Task Left Behind: Isotropic Model Merging with Common and Task-Specific Subspaces",
+  "authors": [
+   "Marczak, Daniel",
+   "Magistri, Simone",
+   "Cygert, Sebastian",
+   "Twardowski, Bartłomiej",
+   "Bagdanov, Andrew D.",
+   "van de Weijer, Joost"
+  ],
+  "date": "2025/02/07",
+  "comments": "Accepted at ICML 2025",
+  "journal_ref": null,
+  "html_sha256": "d1108c5097bc00bac4665dd2755b4f247837639ac0d6fef5e4812ceda7c95cb9",
+  "fetched": "2026-09-26"
+ },
+ "2410.17961": {
+  "title": "Closed-form merging of parameter-efficient modules for Federated Continual Learning",
+  "authors": [
+   "Salami, Riccardo",
+   "Buzzega, Pietro",
+   "Mosconi, Matteo",
+   "Bonato, Jacopo",
+   "Sabetta, Luigi",
+   "Calderara, Simone"
+  ],
+  "date": "2024/10/23",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "74733f05f182c7049a5105ec992246d89cd95cfc1259d8d40e5b05ce55b59792",
+  "fetched": "2026-09-26"
+ },
+ "2602.20208": {
+  "title": "Model Merging in the Essential Subspace",
+  "authors": [
+   "Li, Longhua",
+   "Qi, Lei",
+   "Tian, Qi",
+   "Geng, Xin"
+  ],
+  "date": "2026/02/23",
+  "comments": "Accepted by CVPR 2026",
+  "journal_ref": null,
+  "html_sha256": "027acf088f3151666bbf8b96d71b7e32dc7ac4ac7021a2c373da045827b9adf8",
+  "fetched": "2026-09-26"
+ },
+ "2411.15231": {
+  "title": "IterIS: Iterative Inference-Solving Alignment for LoRA Merging",
+  "authors": [
+   "Chen, Hongxu",
+   "Li, Runshi",
+   "Zhu, Bowei",
+   "Wang, Zhen",
+   "Chen, Long"
+  ],
+  "date": "2024/11/21",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "4f6f40706d9836104fb82f31c8bbfbd755c368a63b6e56d6053aadd62aee6e29",
+  "fetched": "2026-09-26"
+ },
+ "2609.22237": {
+  "title": "Not All Ranks Are Equal: Budget-Aware LoRA Merging Across Tasks",
+  "authors": [
+   "Amballa, Avinash",
+   "Saidutta, Yashas Malur",
+   "Li, Wenbo",
+   "Valkov, Lazar",
+   "Chappidi, Srinivas"
+  ],
+  "date": "2026/09/03",
+  "comments": "7 pages, AAAI submission",
+  "journal_ref": null,
+  "html_sha256": "c485a9865d30e4d4577bfd432fc16be9f79d6e89cd410e75bd3190f2b0027dce",
+  "fetched": "2026-09-26"
+ },
+ "2408.12105": {
+  "title": "Pareto Merging: Multi-Objective Optimization for Preference-Aware Model Merging",
+  "authors": [
+   "Chen, Weiyu",
+   "Kwok, James"
+  ],
+  "date": "2024/08/22",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "e66992a8a01c6de516ec131e91732c1b1aeceac4167335d022be0722e1441d12",
+  "fetched": "2026-09-26"
+ },
+ "2406.07529": {
+  "title": "MAP: Low-compute Model Merging with Amortized Pareto Fronts via Quadratic Approximation",
+  "authors": [
+   "Li, Lu",
+   "Zhang, Tianyu",
+   "Bu, Zhiqi",
+   "Wang, Suyuchen",
+   "He, Huan",
+   "Fu, Jie",
+   "Wu, Yonghui",
+   "Bian, Jiang",
+   "Chen, Yong",
+   "Bengio, Yoshua"
+  ],
+  "date": "2024/06/11",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "9e73c1cff3df5c409204d7321e9251e0bc21fc524471abeb89118465d9edc7b2",
+  "fetched": "2026-09-26"
+ },
+ "1811.00103": {
+  "title": "The Price of Fair PCA: One Extra Dimension",
+  "authors": [
+   "Samadi, Samira",
+   "Tantipongpipat, Uthaipon",
+   "Morgenstern, Jamie",
+   "Singh, Mohit",
+   "Vempala, Santosh"
+  ],
+  "date": "2018/10/31",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "0cd954a0aa5c726cabfd2c87997496a2274c521df6df7e6ccb08d4dfd94af384",
+  "fetched": "2026-09-26"
+ },
+ "1902.11281": {
+  "title": "Multi-Criteria Dimensionality Reduction with Applications to Fairness",
+  "authors": [
+   "Tantipongpipat, Uthaipon",
+   "Samadi, Samira",
+   "Singh, Mohit",
+   "Morgenstern, Jamie",
+   "Vempala, Santosh"
+  ],
+  "date": "2019/02/28",
+  "comments": "The preliminary version appeared in NeurIPS2019. This version combines the motivation from \"The Price of Fair PCA: One Extra Dimension\" (NeurIPS 2018) by the same set of author, adds new a motivation, and introduces new heuristics and more experimental results",
+  "journal_ref": null,
+  "html_sha256": "db91a2df14cd3fb122d3ccb23dd5827117532ff549d234ffa7d041c2bb84c2cb",
+  "fetched": "2026-09-26"
+ },
+ "2412.06063": {
+  "title": "On Socially Fair Low-Rank Approximation and Column Subset Selection",
+  "authors": [
+   "Song, Zhao",
+   "Vakilian, Ali",
+   "Woodruff, David P.",
+   "Zhou, Samson"
+  ],
+  "date": "2024/12/08",
+  "comments": "NeurIPS 2024",
+  "journal_ref": null,
+  "html_sha256": "ee5ddba7204ca45f4aab3bcc554a390d9b7e0791b37b10360db842eddd72985a",
+  "fetched": "2026-09-26"
+ },
+ "1911.08731": {
+  "title": "Distributionally Robust Neural Networks for Group Shifts: On the Importance of Regularization for Worst-Case Generalization",
+  "authors": [
+   "Sagawa, Shiori",
+   "Koh, Pang Wei",
+   "Hashimoto, Tatsunori B.",
+   "Liang, Percy"
+  ],
+  "date": "2019/11/20",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "ef701676717bc9b433c2b2d3e7e062bd3f15a84391bfdc207dea94f7abfeb4c3",
+  "fetched": "2026-09-26"
+ },
+ "1810.06401": {
+  "title": "Rate Distortion For Model Compression: From Theory To Practice",
+  "authors": [
+   "Gao, Weihao",
+   "Liu, Yu-Han",
+   "Wang, Chong",
+   "Oh, Sewoong"
+  ],
+  "date": "2018/10/09",
+  "comments": "23 pages, 12 figures",
+  "journal_ref": null,
+  "html_sha256": "ac24fc7d128f191e52c6f9f135e938b492e803b2ac8635e813528f5ffbd74047",
+  "fetched": "2026-09-26"
+ },
+ "2603.09463": {
+  "title": "An Empirical Study and Theoretical Explanation on Task-Level Model-Merging Collapse",
+  "authors": [
+   "Cao, Yuan",
+   "Ran, Dezhi",
+   "Guo, Yuzhe",
+   "Wu, Mengzhou",
+   "Chen, Simin",
+   "Li, Linyi",
+   "Yang, Wei",
+   "Xie, Tao"
+  ],
+  "date": "2026/03/10",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "a18559a9792ed4248d801413fce60e67a751871042c0613465a5cc543af92e3a",
+  "fetched": "2026-09-26"
+ },
+ "2106.09685": {
+  "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+  "authors": [
+   "Hu, Edward J.",
+   "Shen, Yelong",
+   "Wallis, Phillip",
+   "Allen-Zhu, Zeyuan",
+   "Li, Yuanzhi",
+   "Wang, Shean",
+   "Wang, Lu",
+   "Chen, Weizhu"
+  ],
+  "date": "2021/06/17",
+  "comments": "Draft V2 includes better baselines, experiments on GLUE, and more on adapter latency",
+  "journal_ref": null,
+  "html_sha256": "70bb70b4fd6d41b8a0f53fc5148017bf6ef5b73acba822027397f861aee135c6",
+  "fetched": "2026-09-26"
+ },
+ "2212.04089": {
+  "title": "Editing Models with Task Arithmetic",
+  "authors": [
+   "Ilharco, Gabriel",
+   "Ribeiro, Marco Tulio",
+   "Wortsman, Mitchell",
+   "Gururangan, Suchin",
+   "Schmidt, Ludwig",
+   "Hajishirzi, Hannaneh",
+   "Farhadi, Ali"
+  ],
+  "date": "2022/12/08",
+  "comments": "In Proceedings of the 11th International Conference on Learning Representations (ICLR 2023)",
+  "journal_ref": null,
+  "html_sha256": "85b49ce16e0396a7ba51faba106b867acc2b71819fbb39255f0917c50b707be2",
+  "fetched": "2026-09-26"
+ },
+ "2306.01708": {
+  "title": "TIES-Merging: Resolving Interference When Merging Models",
+  "authors": [
+   "Yadav, Prateek",
+   "Tam, Derek",
+   "Choshen, Leshem",
+   "Raffel, Colin",
+   "Bansal, Mohit"
+  ],
+  "date": "2023/06/02",
+  "comments": "Published at NeurIPS 2023, 23 Pages, 13 Figures, 14 Tables",
+  "journal_ref": null,
+  "html_sha256": "6fdbd0f716fc3a7d3a2178558d15fee3333657c356e04edd61a5298340f45618",
+  "fetched": "2026-09-26"
+ },
+ "2505.00940": {
+  "title": "StablePCA: Distributionally Robust Learning of Shared Representations from Multi-Source Data",
+  "authors": [
+   "Wang, Zhenyu",
+   "Liu, Molei",
+   "Lei, Jing",
+   "Bach, Francis",
+   "Guo, Zijian"
+  ],
+  "date": "2025/05/02",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "d8061dd8ae1114c0099b4b3198ba4b2470f2a7f200293d50c0099d6bf6c8ed1b",
+  "fetched": "2026-09-26"
+ },
+ "2603.11304": {
+  "title": "Worst-case low-rank approximations",
+  "authors": [
+   "Fries, Anya",
+   "Reichstein, Markus",
+   "Blei, David",
+   "Peters, Jonas"
+  ],
+  "date": "2026/03/11",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "980c0bdf572a85d3816e23e29bce10b6a92fabae5a61654380f861a7c6711bbd",
+  "fetched": "2026-09-26"
+ },
+ "2406.03280": {
+  "title": "FusionBench: A Unified Library and Comprehensive Benchmark for Deep Model Fusion",
+  "authors": [
+   "Tang, Anke",
+   "Shen, Li",
+   "Luo, Yong",
+   "Yang, Enneng",
+   "Hu, Han",
+   "Zhang, Lefei",
+   "Du, Bo",
+   "Tao, Dacheng"
+  ],
+  "date": "2024/06/05",
+  "comments": "Project homepage: this https URL Online documentation: this https URL",
+  "journal_ref": null,
+  "html_sha256": "637673fb74809bc0cab348052459243c21432fb162dd369036f452486637e1c8",
+  "fetched": "2026-09-26"
+ },
+ "1804.07461": {
+  "title": "GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding",
+  "authors": [
+   "Wang, Alex",
+   "Singh, Amanpreet",
+   "Michael, Julian",
+   "Hill, Felix",
+   "Levy, Omer",
+   "Bowman, Samuel R."
+  ],
+  "date": "2018/04/20",
+  "comments": "ICLR 2019; this https URL",
+  "journal_ref": null,
+  "html_sha256": "084d5e440898d40f889c6bf6b49a8df770967bed41d73d67a31c96e32c94dcfe",
+  "fetched": "2026-09-26"
+ },
+ "2210.11416": {
+  "title": "Scaling Instruction-Finetuned Language Models",
+  "authors": [
+   "Chung, Hyung Won",
+   "Hou, Le",
+   "Longpre, Shayne",
+   "Zoph, Barret",
+   "Tay, Yi",
+   "Fedus, William",
+   "Li, Yunxuan",
+   "Wang, Xuezhi",
+   "Dehghani, Mostafa",
+   "Brahma, Siddhartha",
+   "Webson, Albert",
+   "Gu, Shixiang Shane",
+   "Dai, Zhuyun",
+   "Suzgun, Mirac",
+   "Chen, Xinyun",
+   "Chowdhery, Aakanksha",
+   "Castro-Ros, Alex",
+   "Pellat, Marie",
+   "Robinson, Kevin",
+   "Valter, Dasha",
+   "Narang, Sharan",
+   "Mishra, Gaurav",
+   "Yu, Adams",
+   "Zhao, Vincent",
+   "Huang, Yanping",
+   "Dai, Andrew",
+   "Yu, Hongkun",
+   "Petrov, Slav",
+   "Chi, Ed H.",
+   "Dean, Jeff",
+   "Devlin, Jacob",
+   "Roberts, Adam",
+   "Zhou, Denny",
+   "Le, Quoc V.",
+   "Wei, Jason"
+  ],
+  "date": "2022/10/20",
+  "comments": "Public checkpoints: this https URL",
+  "journal_ref": null,
+  "html_sha256": "48a91537235fc6a6b506944d732ad304ccd47fed15b226b8e026a0d41ae57557",
+  "fetched": "2026-09-26"
+ },
+ "1805.12471": {
+  "title": "Neural Network Acceptability Judgments",
+  "authors": [
+   "Warstadt, Alex",
+   "Singh, Amanpreet",
+   "Bowman, Samuel R."
+  ],
+  "date": "2018/05/31",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "69be82ddd3729537703b34737c3b0f08fea7f4b55f08bc578d15de0080a4d994",
+  "fetched": "2026-09-26"
+ },
+ "2407.00066": {
+  "title": "Compress then Serve: Serving Thousands of LoRA Adapters with Little Overhead",
+  "authors": [
+   "Brüel-Gabrielsson, Rickard",
+   "Zhu, Jiacheng",
+   "Bhardwaj, Onkar",
+   "Choshen, Leshem",
+   "Greenewald, Kristjan",
+   "Yurochkin, Mikhail",
+   "Solomon, Justin"
+  ],
+  "date": "2024/06/17",
+  "comments": null,
+  "journal_ref": null,
+  "html_sha256": "1e873bc7b128961ac567203e6e242f51c6599e095b8327fa6a418b65c0d0ae02",
+  "fetched": "2026-09-26"
+ }
+}

@@ -1,0 +1,52 @@
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+\paragraph{The uniform-weight baseline is hard to beat here.} Uniform WRRR has a closed form and
+does not concentrate on the task that looks worst on the calibration sample. On fresh draws it was
+not worse than the empirical minimax solution on average, and its calibration optimism was smaller
+(Table~\ref{tab:optimism}). We therefore keep it as the primary baseline for any further work. A
+worst-task objective would have to beat it at the same rank and the same calibration access
+before it is worth its cost. In stage~2 a minimax fit took a median of \STwoMinimaxCPUMedian~s
+of CPU time (at most \STwoMinimaxCPUMax~s, including the bound audit), against a median of
+\STwoUniformCPUMedianMs~ms for the closed form.
+
+\paragraph{What we could not separate.}
+\begin{itemize}
+\item \emph{Relative normalisation.} Uniform WRRR and minimax both use relative errors. The
+relative-error choice is itself a design decision, and we did not compare it with absolute errors
+in this study. Its effect is not separated from the effects reported here.
+\item \emph{Moment--normaliser interaction.} The Emp/Pop arm was worse than Emp/Emp. A plausible
+reading is that errors in $\Shat_k$ and in $\dhat_k$, which are computed from the same draw, partly
+cancel in the ratio. We did not test this.
+\item \emph{Cause.} The pre-registered rule leaves the cause undetermined. The oracle arms tell us
+what changes when an input to the objective is replaced by its population value. They do not
+identify a mechanism, and population moments are not available to a deployable method.
+\end{itemize}
+
+\paragraph{Statistical limitations.} The design has \CfgNTeachers{} teachers and \CfgNResamples{}
+calibration draws nested in each teacher. We report means, spreads and per-draw values
+(Table~\ref{tab:perdraw}) and run no significance test. A non-significant or ambiguous difference
+is not evidence that the two methods are equivalent. The original draw was seen before the
+diagnostic was designed, so stage~2 is a development diagnostic, not a confirmatory experiment.
+
+\paragraph{Scope of the setting.} The objective is the error of one linear layer's output. It is
+not an end-to-end task loss, and gains in it need not transfer to accuracy. The synthetic
+generator uses Gaussian inputs with a known second moment and a single configuration of dimension,
+rank and sample size. We ran no sweep over these quantities. The bounds of
+Section~\ref{sec:analysis} are deterministic and hold on a norm-bounded analysis set, whereas the
+solver optimises over the unbounded rank-constrained set.
+
+\paragraph{Real adapters.} We checked \AdmNAdapters{} public LoRA adapters (Flan-T5-base, GLUE CoLA, MRPC,
+RTE and SST-2; \citealp{chung2022flan,tang2024fusionbench}) using metadata only. They were excluded
+for three reasons:
+\begin{itemize}
+\item the adapter repositories carry no license information;
+\item the base-model revision used for training is not recorded;
+\item the training and checkpoint-selection split is not documented.
+\end{itemize}
+The publisher evaluates on the GLUE validation split, which is the split we had planned to use for
+development and testing. The publisher also reports exact-match accuracy of generated label words
+for all four tasks. The official GLUE metrics differ for two of them: Matthews correlation for
+CoLA and accuracy/F1 for MRPC \citep{wang2018glue}. These scales should not be
+mixed into a single percentage-point gain. Appendix~\ref{app:planned} lists the planned but
+unexecuted real-adapter pilot.

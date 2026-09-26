@@ -1,0 +1,76 @@
+\documentclass{article} % For LaTeX2e
+% Official ICLR 2027 style files (unmodified; see STYLE_SHA256.txt and BUILD.md).
+\usepackage{iclr2027_conference,times}
+
+% Optional math commands shipped with the ICLR template.
+\input{math_commands.tex}
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% ---- numbers exported from raw result files (paper/tools/export_results.py) ----
+\input{generated/numbers.tex}
+
+% ---- notation -------------------------------------------------------------------
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\opnorm}[1]{\lVert #1\rVert_{\mathrm{op}}}
+\newcommand{\fnorm}[1]{\lVert #1\rVert_{F}}
+\newcommand{\Shat}{\hat{S}}
+\newcommand{\dhat}{\hat{d}}
+\newcommand{\Fhat}{\hat{F}}
+\newcommand{\What}{\hat{W}}
+\newcommand{\Wr}{\mathcal{W}_r}
+\newcommand{\WrB}{\mathcal{W}_{r,B}}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{Calibration Sensitivity in Minimax\\ Low-Rank Approximation}
+
+% Anonymous: the style prints the anonymous author block while \iclrfinalcopy is off.
+\author{Anonymous authors}
+
+%\iclrfinalcopy % not used: this is an internal working draft
+\begin{document}
+
+\maketitle
+% The anonymous template header reads "Under review as a conference paper at ICLR 2027".
+% This draft has NOT been submitted, so the running header is replaced here (the .sty is untouched).
+\lhead{Internal working draft v0 --- not submitted to ICLR 2027 or any venue}
+
+\input{sections/abstract}
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\small\textbf{Draft status.} Internal working draft (v0), not
+submitted and not peer reviewed. The ICLR~2027 template is used for formatting only; the
+template's anonymous author block is kept, and its ``under review'' running header has been
+replaced because it would be false. Human review of this draft is pending
+(HUMAN\_REVIEW\_PENDING).}}
+\end{center}
+
+\input{sections/introduction}
+\input{sections/related}
+\input{sections/setting}
+\input{sections/analysis}
+\input{sections/experiments}
+\input{sections/discussion}
+\input{sections/conclusion}
+\label{sec:end-of-main-text}
+
+\input{sections/statements}
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\appendix
+\input{appendix}
+
+\end{document}

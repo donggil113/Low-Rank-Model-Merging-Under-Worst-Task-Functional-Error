@@ -1,0 +1,169 @@
+\section{Proofs}
+\label{app:proofs}
+
+The statements below are standard. We include proofs so that the assumptions are explicit.
+
+\paragraph{Proposition~\ref{prop:rrr}.} Write $L_\lambda(W)=\fnorm{(W-M_\lambda)A_\lambda^{1/2}}^2
++\mathrm{const}$ with $M_\lambda=C_\lambda A_\lambda^{-1}$. This is valid when $A_\lambda\succ0$
+and follows by completing the square in $\tr(WA_\lambda W^\top)-2\tr(WC_\lambda^\top)$. The
+change of variables $N=WA_\lambda^{1/2}$ is a bijection of $\Wr$ onto itself, because
+$A_\lambda^{1/2}$ is invertible and preserves rank. Minimising $\fnorm{N-C_\lambda
+A_\lambda^{-1/2}}^2$ over $\rank(N)\le r$ is the Eckart--Young problem
+\citep{eckart1936approximation}. Its minimisers are the rank-$r$ truncated SVDs, and they are
+unique if and only if $\sigma_r>\sigma_{r+1}$. Mapping back gives $W_\lambda$. For
+$r\ge\min(p,q)$ no truncation occurs and $W_\lambda=M_\lambda$. \hfill$\square$
+
+\paragraph{Proposition~\ref{prop:unique}.} Let $W^\circ$ minimise $F$ over $\Wr$. Then
+$\mathrm{OPT}=F(W^\circ)\ge\sum_k\lambda^\star_kE_k(W^\circ)=L_{\lambda^\star}(W^\circ)\ge
+g(\lambda^\star)=\mathrm{OPT}$. Hence $W^\circ$ minimises $L_{\lambda^\star}$, and uniqueness gives
+$W^\circ=W_{\lambda^\star}$. \hfill$\square$
+
+\paragraph{Lemma~\ref{lem:pert}.} Let $Y=W-D_k$ with rows $y_i^\top$. Then
+$\tr(Y\Delta_kY^\top)=\sum_iy_i^\top\Delta_ky_i$. For symmetric $\Delta_k$,
+$|y^\top\Delta_ky|\le\opnorm{\Delta_k}\|y\|^2$. Summing over rows gives
+$|\tr(Y\Delta_kY^\top)|\le\opnorm{\Delta_k}\fnorm{Y}^2$, and dividing by $d>0$ proves the claim.
+This is the usual spectral-norm bound on a quadratic form. \hfill$\square$
+
+\paragraph{Lemma~\ref{lem:dev}.} For any $W'\in\mathcal W$,
+$F(\What)\le\Fhat(\What)+\delta\le\Fhat(W')+\epsilon_{\mathrm{opt}}+\delta\le
+F(W')+2\delta+\epsilon_{\mathrm{opt}}$. Taking the infimum over $W'$ gives the claim. This is the
+standard uniform-deviation argument for approximate empirical minimisers. \hfill$\square$
+
+\paragraph{Corollary~\ref{cor:fixed}.} Since $|\max_ka_k-\max_kb_k|\le\max_k|a_k-b_k|$,
+Lemma~\ref{lem:pert} and $\fnorm{W-D_k}\le B+\fnorm{D_k}$ on $\WrB$ give the bound on
+$\sup_{\WrB}|F-\Fhat|$. Next, $\WrB\subseteq\Wr$ implies $\inf_{\Wr}\Fhat\le\inf_{\WrB}\Fhat$,
+so the $\epsilon_{\mathrm{opt}}$-optimality of $\What$ over $\Wr$ carries over to $\WrB$ whenever
+$\What\in\WrB$. Lemma~\ref{lem:dev} with $\mathcal W=\WrB$ and $\inf_{\WrB}F\le F(W^\star)$ then
+completes the proof. The bound applies to our solver's output only a posteriori, when the chosen
+$B$ covers both $\What$ and $W^\star$. The solver itself never enforces a norm bound.
+\hfill$\square$
+
+\paragraph{Lemma~\ref{lem:denom}.} Write $q=\tr[(W-D_k)S_k(W-D_k)^\top]$ and let $\hat q$ be the
+same expression with $\Shat_k$. Then
+\[
+\frac{q}{d_k}-\frac{\hat q}{\dhat_k}=\frac{q-\hat q}{\dhat_k}+\frac{q}{d_k}\cdot
+\frac{\dhat_k-d_k}{\dhat_k}.
+\]
+By Lemma~\ref{lem:pert}, $|q-\hat q|\le\opnorm{\Delta_k}\fnorm{W-D_k}^2$. Moreover
+$|\dhat_k-d_k|=|\tr(D_k\Delta_kD_k^\top)|\le\opnorm{\Delta_k}\fnorm{D_k}^2$. Combining the two
+proves the claim. The assumption $\dhat_k\ge d_{\min,k}>0$ is what keeps the bound finite when it
+is used uniformly over draws. For a single draw the observed $\dhat_k>0$ suffices. We make no
+claim about how large $\opnorm{\Delta_k}$ is with high probability. \hfill$\square$
+
+\section{Implementation and numerical audit}
+\label{app:impl}
+
+The implementation is pure Python (standard library only), because no numerical library was
+installed in the execution environment.
+\begin{itemize}
+\item \emph{Inner step.} The inner problem is solved with Proposition~\ref{prop:rrr}, using Jacobi
+eigendecompositions and one-sided Jacobi SVDs.
+\item \emph{Dual ascent.} It consists of \CfgDualIters{} diminishing-step exponentiated-gradient
+steps followed by \CfgPolishIters{} backtracking steps. Every evaluated $g(\lambda)$ is a lower
+bound in exact arithmetic.
+\item \emph{Primal refinement.} Refinement runs only when the dual gap exceeds $10^{-9}$ in
+relative terms. It alternates two convex block problems, one with the column space fixed and one
+with the row space fixed, with smoothed local descent on a factorisation. A candidate is accepted
+only if it lowers $\Fhat$.
+\item \emph{Test suite.} The tests compare the inner solver with a raw-data reduced-rank
+regression, a grid search, and multi-start alternating least squares. They check the minimax
+bounds against a grid-plus-ellipsoid reference on $2\times q$ problems. They reproduce the
+published fair-PCA gap instance \citep[Lemma~6.2]{tantipongpipat2019multicriteria} and the
+two-group exactness \citep[Thm.~1.2]{tantipongpipat2019multicriteria}. They also check invariance
+under $(B,A)\mapsto(BR,R^{-1}A)$.
+\end{itemize}
+Passing tests are evidence about the implementation on the tested instances, not proofs.
+
+\section{Additional results}
+\label{app:results}
+
+\begin{table}[h]
+\caption{Population worst-task error $F$ for every stage-2 cell, one row per teacher and
+calibration draw. ``orig.\ (seen)'' is the stage-1 draw, whose test results were seen before the
+diagnostic was designed.}
+\label{tab:perdraw}
+\centering\small
+\resizebox{\linewidth}{!}{\input{tables/tab_per_draw.tex}}
+\end{table}
+
+\begin{table}[h]
+\caption{Stage-1 synthetic fixture: all methods at rank $r=\CfgR$, means over \CfgNTeachers{}
+teachers, evaluated on the test sample. $\dagger$: unofficial simplified re-implementation.
+$\ddagger$: exceeds the rank budget and is shown for reference only. $\S$: factor averaging
+depends on the factorisation gauge and is a diagnostic only. Weight-space baselines were tuned on
+the development split, whereas uniform WRRR and minimax have no hyper-parameters.}
+\label{tab:stage1}
+\centering\small
+\input{tables/tab_stage1.tex}
+\end{table}
+
+\section{Correction history}
+\label{app:corrections}
+
+Summaries written before this draft contained the following discrepancies with the raw files. The
+original summaries are preserved in the repository (\texttt{CORRECTIONS.md}).
+\begin{enumerate}
+\item The stage-1 minimax mean test worst-task error was summarised as ``0.858''. The raw value is
+\SOneMinimaxRawMean{} (\texttt{per\_method.minimax\_rel.test\_worst\_rel.mean}), so the correct three-decimal
+value is \SOneMinimaxTestWorstMean. The earlier value came from rounding a four-decimal display
+twice.
+\item The largest Monte Carlo deviation was summarised as ``3.03''. The raw maximum is
+\STwoMCWorstZ; the earlier value was read from the last log line only.
+\item The triples 0.713/0.802/1.057 and 0.726/0.768/1.081 were placed side by side in a summary.
+They are the same minimax solutions evaluated on the test sample and on the population objective,
+respectively (Table~\ref{tab:orig}). They are not a comparison of two methods.
+\item An earlier interpretation said that the minimax solution failed because the weakest task
+received a small weight. The oracle Pop/Pop solution also gives that task a small weight
+($\lambda=\STwoPPLambdaTwoTA$ and $\STwoPPLambdaTwoTC$ for teachers 0 and 2). The small weight
+itself is therefore not the failure.
+\end{enumerate}
+
+\section{Planned experiments (NOT RUN)}
+\label{app:planned}
+
+None of the following was executed. They are listed so that the absence of results is explicit.
+\begin{enumerate}
+\item \textbf{Real-adapter pilot} (BLOCKED). The plan is to merge \AdmNAdapters{} public Flan-T5-base GLUE
+LoRA adapters (rank \AdmLoraR, query/value projections) and to report worst-task and mean task metrics
+at a matched final rank and matched calibration access. It is blocked for three reasons:
+\begin{itemize}
+\item the adapter repositories contain no license or usage terms;
+\item the base-model revision used for training is not recorded (the adapter configuration has
+\texttt{revision: null});
+\item the training and checkpoint-selection split is undocumented, while the publisher evaluates
+on the GLUE validation split.
+\end{itemize}
+The metric plan must also separate the publisher's exact-match accuracy from the official GLUE
+metrics (Section~\ref{sec:discussion}). The publisher reports the CoLA adapter at the same CoLA
+score as the base model (\AdmCoLAScore), so accuracy normalised by the adapter's own score carries no
+information for that task.
+\item \textbf{Absolute versus relative errors}, to separate the effect of relative normalisation.
+\item \textbf{Calibration-size dependence} (not approved in this phase: no $n$, rank or
+task-count sweeps).
+\item \textbf{Regularised worst-task variants}, for example shrinking $\lambda$ towards uniform.
+These are not implemented; any such variant must be pre-registered and selected on development
+data.
+\item \textbf{Numerical evaluation of Corollary~\ref{cor:fixed} and Lemma~\ref{lem:denom}} on the
+recorded instances. This is planned for the next revision of this draft.
+\end{enumerate}
+
+\section{Reproducibility details}
+\label{app:repro}
+
+\begin{itemize}
+\item \emph{Stage 1.} Command:
+\texttt{PYTHONPATH=src python3 -m lowrank\_merge.run\_cpu --config configs/cpu\_synthetic.json}.
+Wall time \SOneWall~s.
+\item \emph{Stage 2.} Registered before execution at commit \texttt{\STwoCommit}. Command:
+\texttt{PYTHONPATH=src python3 -m lowrank\_merge.run\_diag --config
+configs/p2\_stage2\_moment\_normalizer\_diag.json}.
+\begin{itemize}
+\item \STwoCellsOK{} of \STwoCellsTotal{} cells completed.
+\item CPU time \STwoCPU~s under a hard limit of \STwoCPUCap~s; wall time \STwoWall~s; peak RSS
+\STwoRSS~MiB.
+\item One worker and one compute thread. No package was installed and nothing was downloaded.
+\end{itemize}
+\item \emph{Numbers and tables.} Every number in the text is emitted by
+\texttt{paper/tools/export\_results.py}. The file \texttt{paper/generated/provenance.tsv} maps each
+number to its source file and field.
+\end{itemize}
