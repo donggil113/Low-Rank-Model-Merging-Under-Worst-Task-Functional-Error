@@ -1,0 +1,23 @@
+{
+  "experiment": "p2_stage3_bound_check",
+  "schema_version": 1,
+  "status_at_registration": "REGISTERED_BEFORE_EXECUTION",
+  "nature": "Numerical check of deterministic inequalities (Lemma 1, Corollary 1, Lemma 3 of the draft) on already-recorded stage-2 instances. Re-analysis only: fitted matrices were stored in stage 2 only as SHA-256, so they are regenerated with the identical code path and accepted only if the hash matches the recorded value. Not a new experiment; no new data distribution, no sweep.",
+  "source_run": "runs/p2_stage2_moment_normalizer_diag_20260926T155649Z",
+  "stage2_config": "configs/p2_stage2_moment_normalizer_diag.json",
+  "fixture_config": "configs/cpu_synthetic.json",
+  "teachers": [0, 1, 2],
+  "draws": ["orig_seen", "r101", "r102", "r103"],
+  "arms_checked": {
+    "emp_moment__pop_norm": "Corollary 1 (fixed population normalisers) + Lemma 2",
+    "emp_moment__emp_norm": "Lemma 3 (estimated normalisers) + Lemma 2"
+  },
+  "reference_solution": "W* = stage-2 pop_moment__pop_norm minimax solution of the same teacher (regenerated, hash-checked)",
+  "analysis_radius": "B = max(||W_hat||_F, ||W*||_F), chosen a posteriori; the inequalities are deterministic, so they hold for any B covering both matrices",
+  "epsilon_opt": "UB - LB of the W_hat fit on its fitted objective",
+  "pointwise_checks": "per task k at W_hat and at W*: Lemma 1 (fixed normaliser) and Lemma 3 (estimated normaliser)",
+  "expected": "every inequality holds (they are proved); any violation is reported as an implementation or derivation error, not tuned away",
+  "reported_quantities": ["relative moment error ||S_k - S_hat_k||_op / ||S_k||_op", "bound 2*delta + eps_opt", "realised F(W_hat) - F(W*)", "ratio bound / realised"],
+  "resource_caps": {"cpu_seconds_total": 1100, "peak_rss_bytes": 3221225472, "cpu_workers": 1, "compute_threads": 1,
+                    "note": "analysis budget for this task is 1200 CPU-s in total; about 100 CPU-s are reserved for exporter and other small analyses"}
+}
