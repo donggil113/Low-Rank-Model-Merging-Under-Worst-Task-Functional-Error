@@ -1,0 +1,88 @@
+{
+  "caps": {
+    "RLIMIT_AS": [
+      3221225472,
+      3221225472
+    ],
+    "RLIMIT_CPU": [
+      1800,
+      1830
+    ],
+    "threads_env": "1 (pure-Python code is single-threaded)",
+    "workers": 1
+  },
+  "cell_status_counts": {
+    "OK": 78
+  },
+  "command": "PYTHONPATH=src python3 -m lowrank_merge.run_diag --config configs/p2_stage2_moment_normalizer_diag.json",
+  "config_file_sha256": "405d5ae8ee23aee7dcf750969fe8cf8b25b0f546394e8ab5869294176725ddc1",
+  "config_path": "configs/p2_stage2_moment_normalizer_diag.json",
+  "cpu_time_s": 285.75611718000005,
+  "data_sha256": {
+    "teacher0": "c19324bdb93d34abd3282039ce67ae285f15d77cd6e860b8bf6f0d051cd7f20b",
+    "teacher0_orig_seen": "5e8030e626541a1fb98b4caee6ac2af0fa3e5ec77a0d0e2ad470511e5e69fcae",
+    "teacher0_r101": "38c4b06bb41e8dab1551a29719103beb93645b8069fa0365481b5b4362553e6a",
+    "teacher0_r102": "5c7a2d1a951a8eeb60cd295d40d9a93e26c5c3655ab46943e5ab3662fc8b2788",
+    "teacher0_r103": "a29bc701dc016ea5c7c988c9818cba8f6bdff58530219a77e99e3350dccf16d7",
+    "teacher1": "2942756e42a38dda7ad1d614bf1f5e8432042afadcc83c18f44c10aded616068",
+    "teacher1_orig_seen": "cf635364adc756154ed5351e341eee71882ea56d7f3a5b076ae0e1f668f69404",
+    "teacher1_r101": "dd056d2f0fd8c018ad765b4d524d9f6daae305b2306ad220d46433010fa314ce",
+    "teacher1_r102": "25c305d527e3af014288cc5d6435f754dc216b1bfffb6c65e4ff2ed96fa30cc5",
+    "teacher1_r103": "35e852d97e9233f20a296ad8ef22479514de73ddeee053ef1f6646e6a7aee1bf",
+    "teacher2": "d9703b58012399c1c3bf3b5987fc9894a5607093aa2e7dcd3cb07481a573dd9b",
+    "teacher2_orig_seen": "a8e6b5e7d72c6cce511de8d5e4b2937a7821be18672518e8221d1f4f0117378c",
+    "teacher2_r101": "e03ee3cc4595279e1b74c8b8dba164e41defc5215721e7a300e784fbedc1ee6e",
+    "teacher2_r102": "2a6b05c38e76543ac41cb8c9f80e48294176af8be8ec5cad343d48c6e30618ec",
+    "teacher2_r103": "7de90c8dbcaaafa636e6bfaff87c91b1f2e58761cd47877f614120703cdcd6ef"
+  },
+  "environment": {
+    "cpu_count": 4,
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "optional_modules": {
+      "datasets": "NOT_INSTALLED",
+      "numpy": "NOT_INSTALLED",
+      "peft": "NOT_INSTALLED",
+      "scipy": "NOT_INSTALLED",
+      "torch": "NOT_INSTALLED",
+      "transformers": "NOT_INSTALLED"
+    },
+    "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
+    "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]"
+  },
+  "finished_utc": "2026-09-26T16:01:38.381171+00:00",
+  "fixture_config_sha256": "eac8a3c96bce5892b6fe3ceaf18dc43f3099dcdd094030e698ce967f32de07ae",
+  "git": {
+    "branch": "claude/optimistic-darwin-la7u0a",
+    "commit": "06947af3173ea68d04bc691626e8c1e6bd62a99e",
+    "dirty": true,
+    "dirty_files": [
+      "?? runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/",
+      "?? runs/p2_stage2_run_stdout.log"
+    ]
+  },
+  "install_download_cost": "none (no installs, no downloads)",
+  "nature": "DEVELOPMENT DIAGNOSTIC on the synthetic fixture. Not a confirmatory experiment: the original draws' test results were already seen (runs/cpu_synthetic_layer_fixture_20260926T152312Z). Population-information arms are oracle diagnostics, not deployable methods.",
+  "peak_rss_bytes": 49147904,
+  "run_dir": "runs/p2_stage2_moment_normalizer_diag_20260926T155649Z",
+  "source_sha256": {
+    "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "adapters.py": "908c736ed267bf9c551fdd4e1fd927ffe99ae784569efb11925ee7124ba88f11",
+    "baselines.py": "1625c239f966288237d9370da98931933d7b8311dbee1ca8cc93c8a177258eca",
+    "linalg.py": "a740fc0da6dbc9705c1361aaf581412203913850b8b7f443d6b69808615e32d2",
+    "manifest.py": "1b92227d47d5ccd22543c016b4ac750e1377c0fdc569e69749e9bf3394c4253d",
+    "minimax.py": "80c58e7a58a6ad88384d9cf150675d82ca2e30c1e1208fb176e9a34046a888a0",
+    "objectives.py": "1513fe3090e3ad93af01668ce56054af924c75950561d0c7523662ce5ae50f9c",
+    "pilot.py": "d57d23af70c72e3f3bc10c8dafaab56d2b11c99f2841eb6e1eb2bba6d6023333",
+    "pipeline.py": "c60459a1d9282d91228f7943f4b74603386c405465bf14dca568eab04e11acb5",
+    "population.py": "122d82f0cf49779b29e561178c614d48a1176b1294b8b4fd29b6ad9c56d02f35",
+    "references.py": "2f46db8f1d9c6c22fdcc1c1dca1ea0a69144d2339dcd7622a83c91a651a651e9",
+    "run_cpu.py": "a8ac512fe08f226323861c10f292b8104909058d5a59a16ee0bd95806d740b2d",
+    "run_diag.py": "28d5e8aa2e26b93994688cc663598b855d97080dca428f5db55748b166267e8f",
+    "synthetic.py": "5d37e47760cf5a849e8e0fbd74b717f8810874928285097a5ada4cdf6d3e1481",
+    "wrrr.py": "231161fa0bb01026dd56ac068902fec8ab03acfc4633d0238194c2a0039c311a"
+  },
+  "started_utc": "2026-09-26T15:56:49.887684+00:00",
+  "status": "COMPLETED",
+  "wall_time_s": 288.50494788699996
+}

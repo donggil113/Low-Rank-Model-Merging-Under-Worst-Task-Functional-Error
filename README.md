@@ -17,16 +17,20 @@ so everything is pure Python and meant for small matrices.
 | `src/lowrank_merge/references.py` | independent references: raw-data Izenman RRR, grid + ellipsoid (d_out=2, k=1), multi-start ALS |
 | `src/lowrank_merge/baselines.py` | TA+SVD, RegMean (alpha trick; full / Euclidean truncation / whitened truncation), unofficial KnOTS-TA/TIES and CtM-like, factor averaging (non-invariant diagnostic) |
 | `src/lowrank_merge/pipeline.py`, `run_cpu.py` | split discipline (cal = fit, dev = baseline hyper-parameters, test = report), runner with raw log + manifest |
+| `src/lowrank_merge/population.py`, `run_diag.py` | stage-2 oracle diagnostic: population moments of the synthetic generator, 2x2 moment/normaliser arms, bound audit (report: `reports/p2_stage2_diagnostic.md`) |
 | `src/lowrank_merge/pilot.py` | preflight for the real 4-adapter pilot config (never downloads/installs) |
 
 ## Commands
 
 ```bash
-# unit tests (46 tests, ~10 s)
+# unit tests (54 tests, ~15 s)
 python3 -m unittest discover -s tests -v
 
 # synthetic layer-level fixture (3 seeds, ~1 min, writes runs/<id>/)
 PYTHONPATH=src python3 -m lowrank_merge.run_cpu --config configs/cpu_synthetic.json
+
+# stage 2: moment / normaliser 2x2 diagnostic (~5 CPU-min, capped at 1800 s)
+PYTHONPATH=src python3 -m lowrank_merge.run_diag --config configs/p2_stage2_moment_normalizer_diag.json
 
 # real-adapter pilot preflight (exit code 2 while blocked)
 PYTHONPATH=src python3 -m lowrank_merge.pilot --config configs/pilot_4task_flan_t5_base_glue.json

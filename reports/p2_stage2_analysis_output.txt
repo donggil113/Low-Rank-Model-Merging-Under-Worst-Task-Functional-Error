@@ -1,0 +1,97 @@
+status COMPLETED {'OK': 78}
+bound audit {
+ "all_solver_failure_refuted": true,
+ "all_unique_at_lambda_star": true,
+ "any_null_space": false,
+ "max_M_sigma_k1_over_sigma_1": 1.964142715105695e-16,
+ "max_S_cond": 19.34322309887776,
+ "max_g_rel_discrepancy_vs_izenman": 2.4899564005090612e-15,
+ "max_gap_rel": 2.03002082538924e-09,
+ "max_ub_rel_discrepancy_raw": 2.828759940421704e-15,
+ "min_lambda": 0.12979653279573614,
+ "n_minimax_fits": 39
+}
+pop/pop {'F_pop_minimax': 0.4906, 'F_pop_uniform': 0.5568, 'consistent': True, 'fit_objective_equals_eval': 0.0, 'minimax_gap_abs': 0.0, 'teacher': 0}
+pop/pop {'F_pop_minimax': 0.5205, 'F_pop_uniform': 0.6579, 'consistent': True, 'fit_objective_equals_eval': 0.0, 'minimax_gap_abs': 0.0, 'teacher': 1}
+pop/pop {'F_pop_minimax': 0.5973, 'F_pop_uniform': 0.6729, 'consistent': True, 'fit_objective_equals_eval': 0.0, 'minimax_gap_abs': 0.0, 'teacher': 2}
+
+== emp_moment__emp_norm: AMBIGUOUS mean_delta=+0.0065 sd=0.078 n_teachers_pos=1
+   teacher mean delta {'0': -0.0415, '1': -0.0142, '2': 0.0752}
+   cells [-0.085, -0.006, -0.034, 0.004, -0.08, 0.033, 0.127, -0.029, 0.127]
+   mean F_pop {'minimax_rel': 0.6719, 'wrrr_uniform_rel': 0.6654}
+   orig_seen {'0': 0.0693, '1': 0.113, '2': 0.301}
+
+== emp_moment__pop_norm: PROBLEM_PRESENT mean_delta=+0.0390 sd=0.082 n_teachers_pos=2
+   teacher mean delta {'0': 0.0337, '1': -0.0023, '2': 0.0856}
+   cells [-0.074, 0.058, 0.116, 0.05, -0.103, 0.046, 0.026, 0.084, 0.147]
+   mean F_pop {'minimax_rel': 0.7376, 'wrrr_uniform_rel': 0.6986}
+   orig_seen {'0': -0.0531, '1': 0.1768, '2': 0.1727}
+
+== pop_moment__emp_norm: PROBLEM_ABSENT mean_delta=-0.0254 sd=0.043 n_teachers_pos=0
+   teacher mean delta {'0': -0.0406, '1': -0.0253, '2': -0.0104}
+   cells [-0.046, -0.048, -0.027, -0.043, 0.047, -0.079, 0.044, -0.023, -0.053]
+   mean F_pop {'minimax_rel': 0.6581, 'wrrr_uniform_rel': 0.6835}
+   orig_seen {'0': -0.0086, '1': -0.0502, '2': 0.1167}
+
+== pop_moment__pop_norm: PROBLEM_ABSENT mean_delta=-0.0931 sd=0.034 n_teachers_pos=0
+   teacher mean delta {'0': -0.0662, '1': -0.1375, '2': -0.0756}
+   cells [-0.066, -0.066, -0.066, -0.137, -0.137, -0.137, -0.076, -0.076, -0.076]
+   mean F_pop {'minimax_rel': 0.5361, 'wrrr_uniform_rel': 0.6292}
+   orig_seen {'0': -0.0662, '1': -0.1375, '2': -0.0756}
+
+orig_seen emp/emp: previously-seen test-sample worst vs population worst vs fit max
+  0 wrrr_uniform_rel test 0.642 pop 0.657 fit_max 0.536
+  0 minimax_rel test 0.713 pop 0.726 fit_max 0.449
+  1 wrrr_uniform_rel test 0.66 pop 0.655 fit_max 0.624
+  1 minimax_rel test 0.802 pop 0.768 fit_max 0.463
+  2 wrrr_uniform_rel test 0.754 pop 0.78 fit_max 0.643
+  2 minimax_rel test 1.057 pop 1.081 fit_max 0.503
+optimism emp_moment__emp_norm wrrr_uniform_rel: mean fit max 0.606 -> mean F_pop 0.665
+optimism emp_moment__emp_norm minimax_rel: mean fit max 0.497 -> mean F_pop 0.672
+optimism emp_moment__pop_norm wrrr_uniform_rel: mean fit max 0.622 -> mean F_pop 0.699
+optimism emp_moment__pop_norm minimax_rel: mean fit max 0.517 -> mean F_pop 0.738
+optimism pop_moment__emp_norm wrrr_uniform_rel: mean fit max 0.612 -> mean F_pop 0.684
+optimism pop_moment__emp_norm minimax_rel: mean fit max 0.513 -> mean F_pop 0.658
+
+empirical/population normaliser ratio: min 0.716 max 1.733
+lambda* 0 all_draws pop_moment__pop_norm [0.285, 0.257, 0.165, 0.293]
+lambda* 0 orig_seen emp_moment__emp_norm [0.29, 0.252, 0.137, 0.321]
+lambda* 0 orig_seen emp_moment__pop_norm [0.291, 0.254, 0.148, 0.307]
+lambda* 0 orig_seen pop_moment__emp_norm [0.267, 0.257, 0.176, 0.3]
+lambda* 0 r101 emp_moment__emp_norm [0.256, 0.303, 0.173, 0.269]
+lambda* 0 r101 emp_moment__pop_norm [0.263, 0.295, 0.17, 0.272]
+lambda* 0 r101 pop_moment__emp_norm [0.263, 0.279, 0.175, 0.283]
+lambda* 0 r102 emp_moment__emp_norm [0.279, 0.201, 0.184, 0.337]
+lambda* 0 r102 emp_moment__pop_norm [0.272, 0.196, 0.191, 0.341]
+lambda* 0 r102 pop_moment__emp_norm [0.274, 0.268, 0.17, 0.288]
+lambda* 0 r103 emp_moment__emp_norm [0.287, 0.242, 0.201, 0.271]
+lambda* 0 r103 emp_moment__pop_norm [0.263, 0.263, 0.205, 0.269]
+lambda* 0 r103 pop_moment__emp_norm [0.282, 0.269, 0.178, 0.271]
+lambda* 1 all_draws pop_moment__pop_norm [0.208, 0.223, 0.169, 0.4]
+lambda* 1 orig_seen emp_moment__emp_norm [0.22, 0.2, 0.173, 0.407]
+lambda* 1 orig_seen emp_moment__pop_norm [0.207, 0.189, 0.181, 0.422]
+lambda* 1 orig_seen pop_moment__emp_norm [0.254, 0.253, 0.182, 0.311]
+lambda* 1 r101 emp_moment__emp_norm [0.266, 0.183, 0.211, 0.34]
+lambda* 1 r101 emp_moment__pop_norm [0.238, 0.2, 0.215, 0.348]
+lambda* 1 r101 pop_moment__emp_norm [0.24, 0.204, 0.173, 0.384]
+lambda* 1 r102 emp_moment__emp_norm [0.185, 0.213, 0.177, 0.425]
+lambda* 1 r102 emp_moment__pop_norm [0.184, 0.22, 0.185, 0.411]
+lambda* 1 r102 pop_moment__emp_norm [0.194, 0.183, 0.173, 0.45]
+lambda* 1 r103 emp_moment__emp_norm [0.192, 0.223, 0.173, 0.412]
+lambda* 1 r103 emp_moment__pop_norm [0.205, 0.227, 0.171, 0.397]
+lambda* 1 r103 pop_moment__emp_norm [0.196, 0.219, 0.17, 0.416]
+lambda* 2 all_draws pop_moment__pop_norm [0.274, 0.207, 0.188, 0.331]
+lambda* 2 orig_seen emp_moment__emp_norm [0.275, 0.136, 0.153, 0.436]
+lambda* 2 orig_seen emp_moment__pop_norm [0.286, 0.13, 0.162, 0.422]
+lambda* 2 orig_seen pop_moment__emp_norm [0.27, 0.195, 0.188, 0.347]
+lambda* 2 r101 emp_moment__emp_norm [0.217, 0.249, 0.198, 0.335]
+lambda* 2 r101 emp_moment__pop_norm [0.227, 0.256, 0.203, 0.314]
+lambda* 2 r101 pop_moment__emp_norm [0.203, 0.237, 0.203, 0.357]
+lambda* 2 r102 emp_moment__emp_norm [0.273, 0.156, 0.218, 0.352]
+lambda* 2 r102 emp_moment__pop_norm [0.27, 0.151, 0.229, 0.35]
+lambda* 2 r102 pop_moment__emp_norm [0.249, 0.213, 0.187, 0.351]
+lambda* 2 r103 emp_moment__emp_norm [0.265, 0.184, 0.197, 0.354]
+lambda* 2 r103 emp_moment__pop_norm [0.259, 0.182, 0.196, 0.363]
+lambda* 2 r103 pop_moment__emp_norm [0.282, 0.227, 0.188, 0.302]
+
+cpu per fit min 0.007 max 19.76 sum 273.4

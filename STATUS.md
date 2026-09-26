@@ -1,12 +1,14 @@
 # STATUS: P2 Low-Rank Model Merging Under Worst-Task Functional Error
 
-최종 갱신: 2026-09-26 (UTC)
+최종 갱신: 2026-09-26 (UTC), stage 2 반영 (§9)
 
 | 구분 | 상태 |
 |---|---|
-| 소프트웨어 | **TECHNICAL_TEST_PASS**: 단위 테스트 46개 통과, CPU fixture 실행 COMPLETED |
-| 과학 | **SCIENCE_NOT_EVALUATED**: 실제 adapter 실험 없음. 합성 fixture 결과는 증거가 아님 |
-| 실제 adapter 파일럿 | **BLOCKED**: preflight 차단 요인 20개(승인 3, 의존성 5, 라이선스 7, revision 미고정 5) |
+| 소프트웨어 | **TECHNICAL_TEST_PASS**: 단위 테스트 54개 통과(기존 46개는 수정 없음, 신규 8개). stage-1 CPU fixture COMPLETED. stage-2 진단 COMPLETED(78/78 cell) |
+| 과학 | **SCIENCE_NOT_EVALUATED**: 실제 adapter 실험 없음. 합성 fixture 결과와 stage-2 진단은 개발 진단이며 증거가 아님 |
+| stage-2 원인 분리 | solver 실패, evaluator 불일치, 분모 잡음 단독 설명은 **반박**. empirical moment 잡음이 가장 유력하나 사전 규칙상 **CAUSE_UNDETERMINED**(§9) |
+| 주 기준선 | **uniform WRRR 유지**: empirical minimax는 새 draw 평균에서도 이득이 없음(+0.0065). 합성 문제 한정 |
+| 실제 adapter 파일럿 | **BLOCKED**: preflight 차단 요인 20개. 추가로 adapter 사용권 불명, 학습·선택 split 불명, base revision 미기록(§9.3) |
 | 신규성 | **미확인**: 주장별 상태는 `PRIOR_ART.md` §3 참고 |
 
 ## 0. 시작 시점 저장소 상태
@@ -142,6 +144,8 @@ C가 null(S) 방향으로 새면 목적함수가 아래로 무한히 내려간�
 3. wrrr_uniform_rel과 regmean_whitened_trunc는 같은 WRRR이다. 차이는 과제별 상대 정규화 여부와 α뿐이다. 그런데 test worst는 0.685 대 1.339로 큰 차이가 났다. 이 fixture에서는 **상대 정규화(이미 알려진 과제별 가중)가 효과의 대부분을 설명한다.**
 4. data-free 기준선은 과제별 입력 공분산을 쓰지 않는다. 이 fixture는 과제마다 공분산을 크게 다르게 만들었기 때문에 구성상 data-aware 방법에 유리하다. 따라서 기준선 대비 격차를 방법의 우위로 해석하지 않는다.
 
+> **stage 2 정정 (2026-09-26).** 위 2번 해석은 부분적으로 수정되었다. oracle(population moment와 population 분모)에서도 과제 2는 작은 λ를 받는다(0.165, 0.188). 따라서 "작은 가중치" 자체는 잡음 때문이 아니다. 또한 원래 draw에서 본 큰 격차는 새 calibration draw에서 재현되지 않았다(평균 Δ +0.0065). 자세한 내용은 §9에 있다.
+
 **파일럿 전에 필요한 조치.** minimax를 정규화하는 방안이 있다. 예를 들어 λ를 균등 분포 쪽으로 수축하거나 KL 반경을 제한하는 방식이다. 이런 변형을 도입하려면 먼저 사전 등록하고 dev에서 골라야 한다. 이번 단계에서는 **구현하지 않았다.** test를 본 뒤에 방법을 바꾸는 것이기 때문이다.
 
 ## 5. 실행 기록 (실패와 중단 포함)
@@ -186,3 +190,73 @@ C가 null(S) 방향으로 새면 목적함수가 아래로 무한히 내려간�
 2. 의존성 설치를 승인받은 뒤 numpy/torch backend를 작성한다. 작성한 backend는 순수 Python reference와 교차검증한다.
 3. 기준선(zero, TA-SVD, WRRR-uniform)의 작은 실제 실행으로 파이프라인을 확인한다.
 4. minimax 과적합 대책(λ 수축 등)을 dev 기준으로 사전 등록한 뒤 파일럿을 실행한다.
+
+## 9. Stage 2: empirical minimax 일반화 실패의 원인 분리 (개발 진단)
+
+짧은 보고: `reports/p2_stage2_diagnostic.md`. 확증 실험이 아니다. 원래 draw의 test 결과는 이미 본 상태이고, population arm은 oracle 진단이다.
+
+### 9.1 실행
+
+| 항목 | 내용 |
+|---|---|
+| config | `configs/p2_stage2_moment_normalizer_diag.json`. 실행 전 커밋 `06947af`에서 고정. 기존 config는 모두 보존했다 |
+| 명령 | `PYTHONPATH=src python3 -m lowrank_merge.run_diag --config configs/p2_stage2_moment_normalizer_diag.json` |
+| 결과 위치 | `runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/`, 파생 표는 `scripts/analyze_p2_stage2.py`와 `reports/p2_stage2_analysis_output.txt`(재생성 로그) |
+| 설계 | 2×2 arm: {empirical, population} moment × {empirical, population} 분모. teacher는 기록된 fixture의 seed 0, 1, 2이며 data hash 일치를 확인했다. 새 calibration 재추출 seed는 101, 102, 103이고 n_cal=32다. 원래 draw는 `orig_seen`으로 따로 보고한다. 방법은 uniform WRRR와 minimax 두 가지다 |
+| 평가 | 모든 결과를 같은 population worst-task 상대오차 F_pop으로 평가했다. population moment E[xxᵀ]=L_tL_tᵀ(평균 0)는 Monte Carlo 20,000 표본으로 12개 모두 통과했다 |
+| cell | 78개 전부 OK. NOT_RUN, FAILED, cap 초과는 0개 |
+| 자원 | CPU 285.8초(상한 1,800초), wall 288.5초, peak RSS 46.9 MiB(상한 3 GiB). RLIMIT_CPU와 RLIMIT_AS로 강제했고 worker·thread는 각 1개다. 설치 0건 |
+| 기존 smoke/test | 수정하지 않았다 |
+
+### 9.2 판정 (Δ = F_pop(minimax) − F_pop(uniform), 새 draw 9개 cell 기준)
+
+| arm | 평균 Δ | 판정 |
+|---|---|---|
+| empirical / empirical | +0.0065 (sd 0.078) | AMBIGUOUS |
+| empirical / population | +0.039 | PROBLEM_PRESENT |
+| population / empirical | −0.025 | PROBLEM_ABSENT |
+| population / population | −0.093 | PROBLEM_ABSENT |
+
+**반박된 설명**
+
+- **solver 실패.** minimax 적합 39개 모두에서 다음이 성립했다(수치 근거이며 증명은 아님).
+  - gap_rel ≤ 2.0e-9
+  - 독립 Izenman 기준 g와의 차이 ≤ 2.5e-15
+  - UB를 원시 데이터로 재계산한 값과의 차이 ≤ 2.8e-15
+  - σ_{k+1}/σ_1 ≤ 2e-16
+  - λ_min ≥ 0.13, S 조건수 ≤ 19.3, null 공간 없음, λ*에서 해가 유일함
+- **evaluator 또는 목적함수 구현 불일치.** pop/pop arm은 fit 목적과 평가 목적이 같은데, 이 arm에서 minimax가 teacher 3개 모두에서 더 나았다.
+- **분모 잡음 단독.** 분모를 population 값으로 바꿔도 문제가 남았다.
+
+**남은 설명(미확정)**
+
+- empirical moment 추정 잡음이 가장 유력하다. population moment arm 두 개에서만 불이익이 사라졌기 때문이다.
+- 다만 empirical/empirical이 AMBIGUOUS여서 사전 귀속 규칙이 성립하지 않는다. 판정은 **CAUSE_UNDETERMINED**다.
+- 분모 잡음도 일부 기여할 수 있다. pop/emp에서 minimax의 이득이 −0.093에서 −0.025로 줄었다.
+- 원래 draw에서 본 큰 실패는 draw에 따른 변동이 크게 작용한 결과로 보인다.
+- minimax의 calibration 낙관 편향은 +0.175로, uniform의 +0.059보다 크다.
+
+**실용 판단**
+
+- uniform WRRR를 주 기준선으로 유지한다.
+- shrinkage, 새 robust loss, sweep, 768×768 포팅, 본실험은 시작하지 않았다.
+- 상대 정규화라는 설계 선택 자체의 영향(절대오차 목적과의 비교)은 분리하지 않았다.
+
+### 9.3 실제 adapter admission (읽기와 metadata 확인만)
+
+근거: `runs/p2_stage2_adapter_admission_20260926T155226Z/`. 가중치와 데이터는 받지 않았다. FusionBench는 read-only로 얕게 clone했고(작업 트리 밖의 `/home/user/tanganke/fusion_bench`, commit `54c9e8c`), 코드는 실행하지 않았다.
+
+- **확인한 사항**
+  - adapter 4개 모두 base google/flan-t5-base, r=16, α=32, dropout 0.1, target q/v다.
+  - repo revision: cola 0e13ad9, mrpc 920cbe7, rte 20a3b5a, sst2 84371dd.
+  - base는 apache-2.0 tag이며 현재 sha는 7bcac57이다.
+  - tokenizer는 google/flan-t5-base이고 prompt는 FusionBench `glue_prompt_templates.py`(MIT)다.
+- **BLOCKED 사유**
+  1. adapter 사용권 불명: license tag가 없고 모델 카드는 자동 템플릿이다.
+  2. 학습·checkpoint 선택 split 불명: 모델 카드와 FusionBench HEAD 어디에도 기록이 없다. 게시자는 GLUE validation으로 평가하는데, 이는 우리가 dev/test로 계획한 split이다.
+  3. base revision 미기록: `revision: null`.
+- **metric**
+  - 4개 과제 모두 생성된 label 단어의 exact-match accuracy다. CoLA의 Matthews 상관이나 MRPC의 F1이 아니다.
+  - 게시자 보고에 따르면 LoRA-CoLA는 CoLA에서 base와 같은 69.1이다. 그래서 "adapter 대비 normalized accuracy"로는 CoLA를 해석할 수 없다.
+  - 기존 파일럿 config는 보존했으며 이번 단계에서 수정하지 않았다.
+- 이 자산들은 이번 실험 입력에서 제외했다. 다른 adapter를 탐색하거나 직접 학습하지 않았다.
