@@ -1,0 +1,120 @@
+{
+  "blocker_counts": {
+    "BLOCKED_APPROVAL": 3,
+    "BLOCKED_DEPENDENCY": 5,
+    "BLOCKED_LICENSE": 7,
+    "BLOCKED_UNPINNED": 5
+  },
+  "blockers": [
+    {
+      "code": "BLOCKED_APPROVAL",
+      "detail": "approval 'download_weights' is False"
+    },
+    {
+      "code": "BLOCKED_APPROVAL",
+      "detail": "approval 'download_datasets' is False"
+    },
+    {
+      "code": "BLOCKED_APPROVAL",
+      "detail": "approval 'install_dependencies' is False"
+    },
+    {
+      "code": "BLOCKED_DEPENDENCY",
+      "detail": "python module 'numpy' not installed"
+    },
+    {
+      "code": "BLOCKED_DEPENDENCY",
+      "detail": "python module 'torch' not installed"
+    },
+    {
+      "code": "BLOCKED_DEPENDENCY",
+      "detail": "python module 'transformers' not installed"
+    },
+    {
+      "code": "BLOCKED_DEPENDENCY",
+      "detail": "python module 'peft' not installed"
+    },
+    {
+      "code": "BLOCKED_DEPENDENCY",
+      "detail": "python module 'datasets' not installed"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "base_model: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "adapter:cola: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "adapter:mrpc: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "adapter:rte: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "adapter:sst2: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "datasets: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_LICENSE",
+      "detail": "code: license_status=UNVERIFIED"
+    },
+    {
+      "code": "BLOCKED_UNPINNED",
+      "detail": "base_model: revision/hash not pinned"
+    },
+    {
+      "code": "BLOCKED_UNPINNED",
+      "detail": "adapter:cola: revision/hash not pinned"
+    },
+    {
+      "code": "BLOCKED_UNPINNED",
+      "detail": "adapter:mrpc: revision/hash not pinned"
+    },
+    {
+      "code": "BLOCKED_UNPINNED",
+      "detail": "adapter:rte: revision/hash not pinned"
+    },
+    {
+      "code": "BLOCKED_UNPINNED",
+      "detail": "adapter:sst2: revision/hash not pinned"
+    }
+  ],
+  "config_issues": [],
+  "config_path": "configs/pilot_4task_flan_t5_base_glue.json",
+  "config_sha256": "3b4f7ec874d4aafb4bd28c5980c5f952f1ec649abaeba8fb148671d2adb9390f",
+  "environment": {
+    "cpu_count": 4,
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "optional_modules": {
+      "datasets": "NOT_INSTALLED",
+      "numpy": "NOT_INSTALLED",
+      "peft": "NOT_INSTALLED",
+      "scipy": "NOT_INSTALLED",
+      "torch": "NOT_INSTALLED",
+      "transformers": "NOT_INSTALLED"
+    },
+    "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
+    "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]"
+  },
+  "git": {
+    "branch": "claude/optimistic-darwin-la7u0a",
+    "commit": "944d9fda8a3301501c673e4f576db83706bcb1e8",
+    "dirty": true,
+    "dirty_files": [
+      "?? runs/"
+    ]
+  },
+  "note": "Preflight only. Nothing was downloaded, installed or trained.",
+  "science_status": "SCIENCE_NOT_EVALUATED",
+  "status": "BLOCKED",
+  "utc": "2026-09-26T15:23:12.651880+00:00"
+}

@@ -209,8 +209,10 @@ def summary_md(cfg, agg, pair, gauge, singular, refs, manifest) -> str:
             lines.append(f"| {name} | FAILED {s['status']} | | | | |")
             continue
         a = s["access"]
+        fr = s["final_rank"]
+        rank_txt = "/".join(str(v) for v in fr["values"]) if isinstance(fr, dict) else str(fr)
         lines.append(
-            f"| {name} | {s['final_rank']} | {s['test_worst_rel']['mean']:.4f} ± "
+            f"| {name} | {rank_txt} | {s['test_worst_rel']['mean']:.4f} ± "
             f"{s['test_worst_rel']['sd']:.4f} | {s['test_mean_rel']['mean']:.4f} | "
             f"{s['cal_worst_rel']['mean']:.4f} | {a['calibration_inputs']} / "
             f"{a['dev_inputs_for_tuning']} / {a['uses_factors']} |")
