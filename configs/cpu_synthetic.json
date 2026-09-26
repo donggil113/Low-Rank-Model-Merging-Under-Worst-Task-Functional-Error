@@ -1,0 +1,58 @@
+{
+  "experiment": "cpu_synthetic_layer_fixture",
+  "purpose": "Implementation check of the layer-level pipeline on synthetic LoRA tasks. Not scientific evidence about real adapters or end-to-end task performance.",
+  "seeds": [0, 1, 2],
+  "synthetic": {
+    "d_out": 12,
+    "d_in": 16,
+    "n_tasks": 4,
+    "lora_rank": 4,
+    "lora_alpha": 8.0,
+    "shared_rho": 0.5,
+    "adapter_gains": [1.0, 1.0, 0.6, 1.6],
+    "cov_decay": 0.8,
+    "n_cal": 32,
+    "n_dev": 64,
+    "n_test": 512
+  },
+  "k": 4,
+  "primary_metric": "test worst-task relative functional error (max_t e_t(M)/e_t(0) on test inputs)",
+  "secondary_metrics": ["test mean-task relative functional error"],
+  "selection_split": "dev",
+  "selection_metric": "worst_rel",
+  "wrrr_mode": "pd",
+  "tuning_grids": {
+    "coef": [0.25, 0.5, 0.75, 1.0],
+    "ties_coef": [0.5, 1.0, 1.5],
+    "ties_density": [0.2, 0.5, 1.0],
+    "regmean_alpha": [1.0, 0.9, 0.5, 0.1]
+  },
+  "dual": {"iters": 300, "eta0": 1.0, "polish_iters": 200},
+  "refine": {
+    "block_rounds": 10,
+    "block_dual": {"iters": 300, "eta0": 1.0, "polish_iters": 200, "mode": "pinv"},
+    "local_restarts": 3,
+    "local_iters": 150,
+    "local_taus": [0.03, 0.01, 0.003, 0.001],
+    "perturb_scale": 0.1,
+    "seed": 0
+  },
+  "methods": [
+    "zero_base_model",
+    "ta_svd",
+    "knots_ta_trunc",
+    "knots_ties_trunc",
+    "ctm_like_ta",
+    "regmean_full_rank",
+    "regmean_euclid_trunc",
+    "regmean_whitened_trunc",
+    "wrrr_uniform_rel",
+    "minimax_rel",
+    "factor_average_diag"
+  ],
+  "gauge_check": {"enabled": true, "cond": 100.0, "seed": 1000},
+  "singular_case": {"enabled": true, "input_subspace_dim": 10, "n_cal": 8, "seed": 7,
+                    "ridges": [0.1, 0.001, 1e-05]},
+  "reference_checks": {"enabled": true, "n_instances": 6, "seed": 2024, "n_grid": 240},
+  "resource_caps": {"max_wall_s": 3600}
+}

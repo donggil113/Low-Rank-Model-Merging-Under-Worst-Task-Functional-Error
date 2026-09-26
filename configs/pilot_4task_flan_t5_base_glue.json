@@ -1,0 +1,122 @@
+{
+  "experiment": "pilot0_4task_lora_merge_flan_t5_base_glue",
+  "schema_version": 1,
+  "stage": "pilot-0: merge four EXISTING adapters on one base model; no training",
+  "run_status": "NOT_RUN",
+  "approvals": {
+    "download_weights": false,
+    "download_datasets": false,
+    "install_dependencies": false,
+    "gpu_compute": false,
+    "paid_api": false
+  },
+  "backend": {
+    "required_python_modules": ["numpy", "torch", "transformers", "peft", "datasets"],
+    "note": "The pure-Python CPU reference in src/ cannot handle 768x768 layers; a numpy/torch port of wrrr/minimax must be cross-checked against the pure-Python reference on small matrices before use."
+  },
+  "base_model": {
+    "id": "google/flan-t5-base",
+    "params_approx": "0.25B",
+    "license_reported": "Apache-2.0 (HF model card, read by a web-reading subagent)",
+    "license_status": "UNVERIFIED",
+    "revision": null,
+    "weights_sha256": null
+  },
+  "adapters": [
+    {"task": "cola", "repo": "tanganke/flan-t5-base_glue-cola_lora-16", "lora_r": 16, "lora_alpha": 32,
+     "target_modules": ["q", "v"], "declared_base": "google/flan-t5-base",
+     "license_reported": null, "license_status": "UNVERIFIED", "revision": null, "weights_sha256": null},
+    {"task": "mrpc", "repo": "tanganke/flan-t5-base_glue-mrpc_lora-16", "lora_r": 16, "lora_alpha": 32,
+     "target_modules": ["q", "v"], "declared_base": "google/flan-t5-base",
+     "license_reported": null, "license_status": "UNVERIFIED", "revision": null, "weights_sha256": null},
+    {"task": "rte", "repo": "tanganke/flan-t5-base_glue-rte_lora-16", "lora_r": 16, "lora_alpha": 32,
+     "target_modules": ["q", "v"], "declared_base": "google/flan-t5-base",
+     "license_reported": null, "license_status": "UNVERIFIED", "revision": null, "weights_sha256": null},
+    {"task": "sst2", "repo": "tanganke/flan-t5-base_glue-sst2_lora-16", "lora_r": 16, "lora_alpha": 32,
+     "target_modules": ["q", "v"], "declared_base": "google/flan-t5-base",
+     "license_reported": null, "license_status": "UNVERIFIED", "revision": null, "weights_sha256": null}
+  ],
+  "asset_verification_notes": [
+    "declared_base read from adapter_config.json on the web for cola and rte only (per subagent); mrpc and sst2 UNVERIFIED",
+    "no adapter repo carries a license tag (per subagent); usage terms must be confirmed with the publisher",
+    "adapter training split and checkpoint-selection data UNVERIFIED: if GLUE validation was used for selection, our dev/test (drawn from validation) are contaminated",
+    "Flan-T5 was instruction-tuned on GLUE-like tasks, so base-model headroom may be small"
+  ],
+  "code": {
+    "evaluation_prompts": "FusionBench flan-t5 GLUE templates (github.com/tanganke/fusion_bench, MIT reported)",
+    "license_status": "UNVERIFIED"
+  },
+  "datasets": {
+    "source": "nyu-mll/glue",
+    "tasks": ["cola", "mrpc", "rte", "sst2"],
+    "license_reported": "per-subset original licenses; SST-2 'Unknown' on HF card",
+    "license_status": "UNVERIFIED"
+  },
+  "splits": {
+    "calibration": {"source": "train", "n_per_task": 128, "sampling": "seeded shuffle, first n", "labels_used": false},
+    "development": {"source": "validation", "fraction": 0.5, "sampling": "seeded split (seed 0)", "use": "baseline hyper-parameter selection only"},
+    "test": {"source": "validation", "fraction": 0.5, "sampling": "complement of development", "use": "reported once, after all choices are frozen"},
+    "official_test_labels": "hidden in GLUE; not used",
+    "disjointness": "calibration (train) is disjoint from dev/test (validation) by construction; dev and test are disjoint halves"
+  },
+  "task_identity_disclosure": {
+    "merging_uses_task_identity": true,
+    "merging_task_identity_detail": "per-task calibration Grams / functional errors require knowing which calibration inputs belong to which task (same for RegMean-family baselines)",
+    "inference_uses_task_identity": true,
+    "inference_task_identity_detail": "task-specific prompt template and label words (shared LM head); no task-specific heads",
+    "task_specific_heads": false
+  },
+  "merge_scope": {
+    "modules": "every LoRA-targeted linear (q, v) in encoder self-attn, decoder self-attn and decoder cross-attn",
+    "per_layer_independent": true,
+    "activation_source": "each task's own fine-tuned model (base + adapter_t) on task-t calibration inputs (RegMean convention)",
+    "activation_source_ablation": "merged-model previous-layer activations (RegMean++ convention), ablation only",
+    "effective_delta": "dW_t = (lora_alpha / r) * B_t @ A_t; factors are never merged directly"
+  },
+  "rank_budget": {"final_rank_per_layer": [16], "secondary_final_rank_per_layer": [32],
+                   "note": "every method is truncated/constrained to the same final rank per layer; methods that exceed it are reported separately and never ranked against rank-matched methods"},
+  "methods": {
+    "zero_base_model": {"calibration_inputs": false, "dev_tuning": false, "labels": false, "final_rank": 0},
+    "individual_adapter_t": {"calibration_inputs": false, "dev_tuning": false, "labels": false, "final_rank": "r per task (oracle upper reference; uses 4x parameters and task routing)"},
+    "ta_svd": {"calibration_inputs": false, "dev_tuning": true, "labels": "dev labels for coefficient selection", "final_rank": "k"},
+    "knots_ties_trunc": {"calibration_inputs": false, "dev_tuning": true, "labels": "dev labels", "final_rank": "k (KnOTS itself has no rank budget; truncation is ours)", "implementation": "official KnOTS code preferred; unofficial re-implementation must be labelled"},
+    "ctm": {"calibration_inputs": false, "dev_tuning": true, "labels": "dev labels", "final_rank": "k by construction", "implementation": "official code if released (UNVERIFIED); otherwise unofficial ctm_like_ta, labelled"},
+    "regmean_euclid_trunc": {"calibration_inputs": true, "dev_tuning": true, "labels": "dev labels for alpha", "final_rank": "k"},
+    "regmean_whitened_trunc": {"calibration_inputs": true, "dev_tuning": true, "labels": "dev labels for alpha", "final_rank": "k"},
+    "wrrr_uniform_rel": {"calibration_inputs": true, "dev_tuning": false, "labels": false, "final_rank": "k"},
+    "minimax_rel": {"calibration_inputs": true, "dev_tuning": false, "labels": false, "final_rank": "k"}
+  },
+  "tuning_grids": {
+    "coef": [0.25, 0.5, 0.75, 1.0],
+    "ties_coef": [0.5, 1.0, 1.5],
+    "ties_density": [0.2, 0.5, 1.0],
+    "regmean_alpha": [1.0, 0.9, 0.5, 0.1],
+    "minimax_rel": "none (solver settings fixed below)"
+  },
+  "solver": {
+    "wrrr_mode": "pd, falling back to pinv (same objective) when S is singular; ridge never used for bounds",
+    "dual": {"iters": 300, "eta0": 1.0, "polish_iters": 200},
+    "refine": {"block_rounds": 10, "local_restarts": 3, "local_iters": 150, "local_taus": [0.03, 0.01, 0.003, 0.001], "seed": 0}
+  },
+  "primary_metric": "test worst-task normalized accuracy: min_t acc_t(merged) / acc_t(adapter_t alone), rank-matched methods only",
+  "secondary_metrics": [
+    "test mean normalized accuracy",
+    "test worst-task and mean absolute accuracy",
+    "layer-level worst-task relative functional error on test inputs (diagnostic only; never a success criterion)"
+  ],
+  "minimum_effect_of_interest": {
+    "worst_task_normalized_accuracy_pp": 2.0,
+    "mean_normalized_accuracy_max_drop_pp": 1.0,
+    "comparator": "best rank-matched baseline with the SAME calibration access, selected on dev (not test)",
+    "decision": "effect must exceed MEI in mean over seeds AND in at least 3 of 3 seeds; otherwise NOT_SUPPORTED"
+  },
+  "seeds": {"calibration_subsample": [0, 1, 2], "dev_test_split": 0, "solver": 0},
+  "resource_caps": {"cpu_wall_hours": 6, "gpu_hours": 0, "ram_gb": 12, "disk_gb": 3,
+                    "note": "caps are limits, not measured spend; actual wall time and peak memory are recorded per run"},
+  "stopping_rules": [
+    "If minimax_rel improves only the layer-level functional error but not the primary metric by >= MEI: stop; do not expand scope.",
+    "If an advantage appears only with more rank, more calibration data or more compute than the comparator: stop automatic expansion and report.",
+    "If the calibration duality gap is not small, report UB/LB and do not describe the solution as optimal.",
+    "Any FAILED/OOM/NOT_RUN condition is preserved in the run log; skipped cells are not counted as passes."
+  ]
+}
