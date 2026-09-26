@@ -1,0 +1,122 @@
+{
+  "experiment": "p2_stage2_moment_normalizer_diag",
+  "schema_version": 1,
+  "status_at_registration": "REGISTERED_BEFORE_EXECUTION",
+  "nature": "DEVELOPMENT DIAGNOSTIC on the synthetic fixture. Not a confirmatory experiment: the original draws' test results were already seen (runs/cpu_synthetic_layer_fixture_20260926T152312Z). Population-information arms are oracle diagnostics, not deployable methods.",
+  "question": "Which of {solver failure, empirical moment estimation, relative-error normalizer estimation, objective/evaluator mismatch} explains the calibration-vs-test gap of minimax_rel (test worst_rel 0.858) vs wrrr_uniform_rel (0.685)?",
+  "inherits_fixture_config": "configs/cpu_synthetic.json",
+  "fixed_from_fixture": {
+    "teacher_seeds": [
+      0,
+      1,
+      2
+    ],
+    "note": "teachers = the three problem instances of the recorded run (adapters, input distributions, dims, LoRA rank, k, n_cal=32 unchanged). Teachers are different problems, NOT independent seeds of one problem."
+  },
+  "calibration_resample_seeds": [
+    101,
+    102,
+    103
+  ],
+  "resample_stream": "_sub_rng(teacher_seed, 'x', task, 'cal_resample', resample_seed), n_cal = 32 per task, same generator distribution",
+  "include_original_draw": {
+    "enabled": true,
+    "label": "orig_seen",
+    "note": "the recorded run's calibration draw; its test results were already seen; reported separately, not pooled with new resamples"
+  },
+  "arms": [
+    {
+      "name": "emp_moment__emp_norm",
+      "moment": "empirical",
+      "normalizer": "empirical"
+    },
+    {
+      "name": "pop_moment__emp_norm",
+      "moment": "population",
+      "normalizer": "empirical"
+    },
+    {
+      "name": "emp_moment__pop_norm",
+      "moment": "empirical",
+      "normalizer": "population"
+    },
+    {
+      "name": "pop_moment__pop_norm",
+      "moment": "population",
+      "normalizer": "population"
+    }
+  ],
+  "arm_definitions": {
+    "empirical moment": "Sigma_hat_t = X_cal X_cal^T / n_cal (uncentered)",
+    "population moment": "Sigma_t = E[x x^T] = L_t L_t^T (generator mean is exactly 0; verified by Monte Carlo before use)",
+    "empirical normalizer": "E_hat_t = tr(D_t Sigma_hat_t D_t^T) from the same calibration draw",
+    "population normalizer": "E_t = tr(D_t Sigma_t D_t^T)",
+    "pop_moment__pop_norm": "uses no calibration samples: identical for every draw; computed once per teacher"
+  },
+  "methods": [
+    "wrrr_uniform_rel",
+    "minimax_rel"
+  ],
+  "k": 4,
+  "solver": "unchanged from configs/cpu_synthetic.json (dual iters 300, polish 200, refine settings, wrrr_mode pd)",
+  "primary_evaluation": "population worst-task relative functional error F_pop(M) = max_t tr((M-D_t) Sigma_t (M-D_t)^T) / E_t, identical for all arms",
+  "secondary_evaluation": [
+    "population mean-task relative error",
+    "original test-sample worst/mean relative error (n_test=512, PREVIOUSLY SEEN, development diagnostic only)"
+  ],
+  "stored_diagnostics": [
+    "per-task empirical fit errors and population errors",
+    "lambda at the best lower bound",
+    "normalizer values emp vs pop",
+    "eigenvalues/condition of S(lambda*)",
+    "whitened singular values sigma_k, sigma_k+1 and uniqueness",
+    "sigma_k+1(M)/sigma_1(M)",
+    "UB, LB, gap",
+    "independent Izenman raw-data RRR at lambda*: M and g discrepancy",
+    "CPU process time per fit, number of WRRR solves"
+  ],
+  "decision_rules": {
+    "delta": "Delta = F_pop(minimax_rel) - F_pop(wrrr_uniform_rel) per (teacher, new resample)",
+    "problem_present": "mean Delta over the 9 new cells > +0.02 AND teacher-level mean Delta > 0 for >= 2 of 3 teachers",
+    "problem_absent": "mean Delta over the 9 new cells <= 0",
+    "otherwise": "AMBIGUOUS",
+    "pop_moment__pop_norm": "fit objective equals the evaluation objective, so minimax must satisfy F_pop(minimax) <= F_pop(uniform) + its own UB-LB gap; a violation means solver/objective/evaluator mismatch and is investigated, not explained away",
+    "solver_failure_refuted_for_a_fit": "gap_rel <= 1e-6 AND independent Izenman g at lambda* agrees within 1e-9 relative AND rank(M) <= k",
+    "attribution": {
+      "moment_noise": "problem present in emp_moment arms and absent in both pop_moment arms",
+      "normalizer_noise": "problem absent in emp_moment__pop_norm while present in emp_moment__emp_norm",
+      "cause_undetermined": "any other pattern; reported as undetermined"
+    }
+  },
+  "not_done_in_this_stage": [
+    "shrinkage or robust-loss variants",
+    "n_cal / rank / task-count sweeps",
+    "replacing failing tasks",
+    "768x768 port",
+    "real adapters"
+  ],
+  "resource_caps": {
+    "cpu_seconds_total": 1800,
+    "cpu_workers": 1,
+    "compute_threads": 1,
+    "peak_rss_bytes": 3221225472,
+    "enforcement": "RLIMIT_CPU (hard) and RLIMIT_AS set in-process before any work; soft check before each fit marks remaining cells NOT_RUN_CAP",
+    "installs": "none required (pure-Python stdlib); install/download cost recorded as zero"
+  },
+  "monte_carlo_check": {
+    "n_samples": 20000,
+    "seed": 777,
+    "teachers": [
+      0,
+      1,
+      2
+    ],
+    "tolerance": "max |Sigma_mc - Sigma|_ij <= 6 * sqrt((Sigma_ii Sigma_jj + Sigma_ij^2) / n)"
+  },
+  "expected_teacher_data_sha256": {
+    "0": "c19324bdb93d34abd3282039ce67ae285f15d77cd6e860b8bf6f0d051cd7f20b",
+    "1": "2942756e42a38dda7ad1d614bf1f5e8432042afadcc83c18f44c10aded616068",
+    "2": "d9703b58012399c1c3bf3b5987fc9894a5607093aa2e7dcd3cb07481a573dd9b"
+  },
+  "expected_teacher_data_sha256_source": "runs/cpu_synthetic_layer_fixture_20260926T152312Z/manifest.json"
+}

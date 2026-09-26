@@ -1,0 +1,129 @@
+{
+  "stage": "p2_stage2 adapter admission (read-only metadata; no weights, no datasets downloaded)",
+  "fetched_utc": "2026-09-26T15:52Z",
+  "method": "curl of https://huggingface.co/api/models/<repo> and raw adapter_config.json / README.md; read-only shallow clone of github.com/tanganke/fusion_bench (no code executed)",
+  "fusion_bench_commit": "54c9e8c9d9621620c720452cd8533332a32d3689",
+  "raw_file_sha256": {
+    "README_cola.md": "b6ee0c03cbc365f7d4c658d54ac15a1e864b5f4eda65969143324a2bc2801e3e",
+    "README_mrpc.md": "560a02aead8faf53941541de732b792cd5e7973244a0e318590dba09a2c43045",
+    "README_rte.md": "b6ee0c03cbc365f7d4c658d54ac15a1e864b5f4eda65969143324a2bc2801e3e",
+    "README_sst2.md": "b6ee0c03cbc365f7d4c658d54ac15a1e864b5f4eda65969143324a2bc2801e3e",
+    "adapter_config_cola.json": "715b7b0eab24980020c171dfaf6a0ed6c194c785fd822e49d55e83569324e38a",
+    "adapter_config_mrpc.json": "715b7b0eab24980020c171dfaf6a0ed6c194c785fd822e49d55e83569324e38a",
+    "adapter_config_rte.json": "715b7b0eab24980020c171dfaf6a0ed6c194c785fd822e49d55e83569324e38a",
+    "adapter_config_sst2.json": "715b7b0eab24980020c171dfaf6a0ed6c194c785fd822e49d55e83569324e38a",
+    "api_base.json": "36054a3aeb7b927e98a68142748dda91fe3b9f763ca1b99517372b76f198c094",
+    "api_cola.json": "efc25bb9bb8a7905f2039ac293bfb8df705c0e75d46ddab6cc0e786d2353f4cd",
+    "api_mrpc.json": "86955abb6b9b2584a1d198acd451614233ed044a0ad95bb12112040c1c674056",
+    "api_rte.json": "318c0b4aaf386146ca09f1ec338e167eeb322efe068f917914d695bde7fa3cc3",
+    "api_sst2.json": "5539e265d48542e3cb7b0bdf4177e9c662a4d29c411cfd3d87f7ef2ae64630e6"
+  },
+  "base_model": {
+    "id": "google/flan-t5-base",
+    "current_sha": "7bcac572ce56db69c1ea7c8af255c5d7c9672fc2",
+    "lastModified": "2023-07-17T12:48:39.000Z",
+    "license_tag": "apache-2.0",
+    "revision_used_by_adapters": "NOT RECORDED (adapter_config.revision = null); base lastModified 2023-07-17 precedes adapter upload 2024-05-22, which suggests but does not prove the current sha"
+  },
+  "adapters": {
+    "cola": {
+      "repo": "tanganke/flan-t5-base_glue-cola_lora-16",
+      "revision_sha": "0e13ad90c5a1988c8d923d5c53feec9acbc4638c",
+      "created": "2024-05-22T02:59:08.000Z",
+      "license_tag": null,
+      "declared_base": "google/flan-t5-base",
+      "r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.1,
+      "target_modules": [
+        "q",
+        "v"
+      ],
+      "task_type": "SEQ_2_SEQ_LM",
+      "model_card": "auto-generated template; License / Training Data / Training Procedure / Metrics = [More Information Needed]"
+    },
+    "mrpc": {
+      "repo": "tanganke/flan-t5-base_glue-mrpc_lora-16",
+      "revision_sha": "920cbe7dce030e04e09982c05ab5877a0e685fda",
+      "created": "2024-05-22T03:18:11.000Z",
+      "license_tag": null,
+      "declared_base": "google/flan-t5-base",
+      "r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.1,
+      "target_modules": [
+        "q",
+        "v"
+      ],
+      "task_type": "SEQ_2_SEQ_LM",
+      "model_card": "auto-generated template; License / Training Data / Training Procedure / Metrics = [More Information Needed]"
+    },
+    "rte": {
+      "repo": "tanganke/flan-t5-base_glue-rte_lora-16",
+      "revision_sha": "20a3b5ab481e5e0a2c5b636f245d3c77b570d32c",
+      "created": "2024-05-22T03:25:49.000Z",
+      "license_tag": null,
+      "declared_base": "google/flan-t5-base",
+      "r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.1,
+      "target_modules": [
+        "q",
+        "v"
+      ],
+      "task_type": "SEQ_2_SEQ_LM",
+      "model_card": "auto-generated template; License / Training Data / Training Procedure / Metrics = [More Information Needed]"
+    },
+    "sst2": {
+      "repo": "tanganke/flan-t5-base_glue-sst2_lora-16",
+      "revision_sha": "84371dd4ce5228b8dacc57738c890bdd75305913",
+      "created": "2024-05-22T03:29:29.000Z",
+      "license_tag": null,
+      "declared_base": "google/flan-t5-base",
+      "r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.1,
+      "target_modules": [
+        "q",
+        "v"
+      ],
+      "task_type": "SEQ_2_SEQ_LM",
+      "model_card": "auto-generated template; License / Training Data / Training Procedure / Metrics = [More Information Needed]"
+    }
+  },
+  "tokenizer_prompt": {
+    "tokenizer": "google/flan-t5-base (fusion_bench config/taskpool/flan-t5_glue_text_generation.yaml)",
+    "prompts": "fusion_bench/tasks/flan_t5_text_generation/glue_prompt_templates.py (MIT, Copyright 2024 Anke Tang)"
+  },
+  "training_and_selection_split": "UNVERIFIED: no training recipe for these SEQ_2_SEQ r=16 q/v adapters found in fusion_bench HEAD (only a generic causal-LM r=64 PeftFinetuneSFT config) and model cards are empty",
+  "publisher_evaluation_split": "GLUE validation (validation_matched for MNLI) per config/taskpool/flan-t5_glue_text_generation.yaml; our planned dev/test halves come from the same validation split",
+  "task_metrics": {
+    "cola": "exact-match accuracy of generated label word (NOT Matthews corr.)",
+    "mrpc": "exact-match accuracy (NOT F1)",
+    "rte": "exact-match accuracy",
+    "sst2": "exact-match accuracy",
+    "stsb (not in our 4)": "Spearman rho",
+    "source": "fusion_bench/compat/taskpool/flan_t5_glue_text_generation.py Classification vs Regression task classes"
+  },
+  "publisher_reported_lora16_scores_on_own_task": {
+    "cola": {
+      "pretrained": 69.1,
+      "lora": 69.1
+    },
+    "mrpc": {
+      "pretrained": 76.2,
+      "lora": 85.5
+    },
+    "rte": {
+      "pretrained": 80.1,
+      "lora": 84.5
+    },
+    "sst2": {
+      "pretrained": 91.2,
+      "lora": 92.9
+    },
+    "source": "docs/modelpool/flan-t5_generation.md (publisher-reported, not reproduced)",
+    "note": "CoLA adapter shows no gain over the base on CoLA under exact-match accuracy; 69.1% is close to the CoLA-validation majority rate (UNVERIFIED), so acc(merged)/acc(adapter) is uninformative for CoLA"
+  },
+  "decision": "BLOCKED: no adapter license/usage terms; training/selection split unknown (dev/test independence cannot be established); base revision not recorded. Assets EXCLUDED from experiment inputs this stage."
+}
