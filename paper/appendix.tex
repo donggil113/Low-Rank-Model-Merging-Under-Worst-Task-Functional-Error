@@ -61,7 +61,7 @@ eigendecompositions and one-sided Jacobi SVDs.
 \item \emph{Dual ascent.} It consists of \CfgDualIters{} diminishing-step exponentiated-gradient
 steps followed by \CfgPolishIters{} backtracking steps. Every evaluated $g(\lambda)$ is a lower
 bound in exact arithmetic.
-\item \emph{Primal refinement.} Refinement runs only when the dual gap exceeds $10^{-9}$ in
+\item \emph{Primal refinement.} Refinement runs only when the dual gap exceeds $\CfgRefineSkip$ in
 relative terms. It alternates two convex block problems, one with the column space fixed and one
 with the row space fixed, with smoothed local descent on a factorisation. A candidate is accepted
 only if it lowers $\Fhat$.
@@ -77,7 +77,10 @@ Passing tests are evidence about the implementation on the tested instances, not
 \section{Additional results}
 \label{app:results}
 
-\begin{table}[h]
+Table~\ref{tab:perdraw} lists the population worst-task error of every stage-2 cell.
+Table~\ref{tab:stage1} lists all stage-1 methods, including the weight-space baselines.
+
+\begin{table}[!ht]
 \caption{Population worst-task error $F$ for every stage-2 cell, one row per teacher and
 calibration draw. ``orig.\ (seen)'' is the stage-1 draw, whose test results were seen before the
 diagnostic was designed.}
@@ -86,7 +89,7 @@ diagnostic was designed.}
 \resizebox{\linewidth}{!}{\input{tables/tab_per_draw.tex}}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \caption{Stage-1 synthetic fixture: all methods at rank $r=\CfgR$, means over \CfgNTeachers{}
 teachers, evaluated on the test sample. $\dagger$: unofficial simplified re-implementation.
 $\ddagger$: exceeds the rank budget and is shown for reference only. $\S$: factor averaging
@@ -96,6 +99,32 @@ the development split, whereas uniform WRRR and minimax have no hyper-parameters
 \centering\small
 \input{tables/tab_stage1.tex}
 \end{table}
+
+\section{Numerical check of the bounds}
+\label{app:boundcheck}
+
+\begin{table}[!ht]
+\caption{Deterministic bounds evaluated on the recorded fits. Entries are medians with
+[min, max] over the \CfgNTeachers{} teachers and \CfgNDrawsBound{} calibration draws per teacher. The draws
+include the original one, which was seen earlier. The bound is $2\delta+\epsilon_{\mathrm{opt}}$ on
+$\WrB$ with the a-posteriori radius $B=\max(\fnorm{\What},\fnorm{W^\star})$.}
+\label{tab:boundcheck}
+\centering\small
+\resizebox{\linewidth}{!}{\input{tables/tab_bound_check.tex}}
+\end{table}
+
+The check was registered before execution (commit \texttt{\SThreeCommit}). Stage~2 stored fitted
+matrices only as SHA-256 hashes, so the \SThreeNRefits{} matrices ($\What$ for two arms and \CfgNDrawsBound{}
+draws per teacher, plus $W^\star$ per teacher) were regenerated with the stage-2 code path. All
+\SThreeNHashMatch{} hashes match, and the regenerated population values reproduce the recorded ones
+exactly (largest difference \SThreeMaxAbsFPopDiffVsRecorded). This is a re-analysis of recorded
+instances, not a new experiment.
+
+For Lemma~\ref{lem:denom} used uniformly on $\WrB$, we bound
+$\sup_{\WrB}E_k(W;S_k,d_k)\le\opnorm{S_k}(B+\fnorm{D_k})^2/d_k$ and use the observed $\dhat_k>0$.
+The median ratio of left- to right-hand side in the pointwise checks is
+\SThreePointwiseMedianRatio. CPU time was \SThreeCPU~s under a hard limit of \SThreeCPUCap~s,
+with peak RSS \SThreeRSS~MiB.
 
 \section{Correction history}
 \label{app:corrections}
@@ -143,8 +172,6 @@ task-count sweeps).
 \item \textbf{Regularised worst-task variants}, for example shrinking $\lambda$ towards uniform.
 These are not implemented; any such variant must be pre-registered and selected on development
 data.
-\item \textbf{Numerical evaluation of Corollary~\ref{cor:fixed} and Lemma~\ref{lem:denom}} on the
-recorded instances. This is planned for the next revision of this draft.
 \end{enumerate}
 
 \section{Reproducibility details}
@@ -163,6 +190,9 @@ configs/p2\_stage2\_moment\_normalizer\_diag.json}.
 \STwoRSS~MiB.
 \item One worker and one compute thread. No package was installed and nothing was downloaded.
 \end{itemize}
+\item \emph{Stage 3 (bound check).} Command:
+\texttt{PYTHONPATH=src python3 -m lowrank\_merge.run\_bound\_check --config
+configs/p2\_stage3\_bound\_check.json}. Wall time \SThreeWall~s.
 \item \emph{Numbers and tables.} Every number in the text is emitted by
 \texttt{paper/tools/export\_results.py}. The file \texttt{paper/generated/provenance.tsv} maps each
 number to its source file and field.

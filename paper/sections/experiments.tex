@@ -76,7 +76,8 @@ nested cells. Pop/Pop does not depend on the draw and is computed once per teach
 \input{figures/fig_paired_2x2.tex}
 \caption{Teacher-level paired comparison on the population worst-task error $F$. For each arm,
 the U (uniform WRRR, circle) and M (minimax, square) values of each teacher are joined by a line,
-using means over the \CfgNResamples{} fresh draws. Lower is better. Per-draw values are in
+using means over the \CfgNResamples{} fresh draws (Pop/Pop does not depend on the draw).
+Lower is better. Per-draw values are in
 Table~\ref{tab:perdraw}.}
 \label{fig:paired}
 \end{figure}
@@ -131,5 +132,28 @@ For example, in Emp/Emp the minimax understatement is \STwoOptGapEEMinimax, agai
 noisy estimates selects the noise. At \CfgNcal{} samples per task the relative normaliser
 estimates range from \STwoNormRatioMin{} to \STwoNormRatioMax{} times their population values.
 
-The uniform-deviation bounds of Section~\ref{sec:analysis} have not yet been evaluated on these
-instances in this draft version; see Appendix~\ref{app:planned}.
+\subsection{Do the deterministic bounds explain the gap?}
+\label{sec:boundcheck}
+
+We evaluated Corollary~\ref{cor:fixed} (Emp/Pop) and Lemmas~\ref{lem:denom} and~\ref{lem:dev}
+(Emp/Emp) on all \SThreeNCells{} recorded fits. The setup was as follows:
+\begin{itemize}
+\item $W^\star$ is the Pop/Pop solution of the same teacher;
+\item $B$ is the larger of $\fnorm{\What}$ and $\fnorm{W^\star}$, chosen after the fact, which is
+legitimate because the inequalities are deterministic (median \SThreeMedianB);
+\item $\epsilon_{\mathrm{opt}}$ is the fit's own UB--LB gap (at most $\SThreeMaxEps$).
+\end{itemize}
+The fitted matrices had been stored only as hashes. They were regenerated with the identical code
+path, and all \SThreeNRefits{} regenerated matrices match their recorded SHA-256
+(Appendix~\ref{app:boundcheck}).
+
+Every inequality holds: \SThreeNBoundsHold{} of \SThreeNCells{} excess bounds and
+\SThreeNPointwiseHold{} of \SThreeNPointwiseChecks{} pointwise checks of Lemmas~\ref{lem:pert}
+and~\ref{lem:denom}. None of them is informative at this sample size. The relative moment error
+$\max_k\opnorm{S_k-\Shat_k}/\opnorm{S_k}$ lies between \SThreeRelOpErrMin{} and
+\SThreeRelOpErrMax{}. The smallest excess bound is \SThreeMinBound{} in units of relative error,
+at least \SThreeMinBoundOverExcess{} times the realised excess $F(\What)-F(W^\star)$. Even the
+pointwise inequalities use at most a fraction \SThreePointwiseMaxRatio{} of their right-hand side.
+The bounds are therefore consistent with the observations but explain neither their size nor
+their sign. With $n=\CfgNcal$ samples in dimension $q=\CfgDin$, a worst-case spectral argument is
+far from tight for these fits.

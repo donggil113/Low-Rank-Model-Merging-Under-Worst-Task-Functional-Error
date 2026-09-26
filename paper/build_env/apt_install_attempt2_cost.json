@@ -1,0 +1,13 @@
+{
+ "commands": [
+  "apt-get update",
+  "apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-fonts-recommended texlive-pictures poppler-utils"
+ ],
+ "exit_codes": [
+  0,
+  0
+ ],
+ "wall_s": 52.29385423660278,
+ "child_cpu_s": 52.152751,
+ "utc": "2026-09-26T22:54:30Z"
+}

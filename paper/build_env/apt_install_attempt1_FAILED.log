@@ -1,0 +1,51 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  fonts-lmodern libkpathsea6 libpaper-utils libpaper1 libpotrace0 libptexenc1
+  libsynctex2 libteckit0 libtexlua53-5 libzzip-0-13t64 t1utils tex-common
+  texlive-base texlive-binaries xdg-utils
+Suggested packages:
+  debhelper ghostscript gv | postscript-viewer perl-tk xpdf | pdf-viewer xzdec
+  texlive-binaries-sse2 hintview texlive-fonts-recommended-doc
+  texlive-latex-base-doc wp2latex texlive-latex-recommended-doc texlive-luatex
+  texlive-pstricks dot2tex prerex texlive-latex-extra texlive-pictures-doc
+  vprerex
+Recommended packages:
+  lmodern dvisvgm tex-gyre tipa ruby tk libfile-mimeinfo-perl libnet-dbus-perl
+  libx11-protocol-perl x11-utils x11-xserver-utils
+The following NEW packages will be installed:
+  fonts-lmodern libkpathsea6 libpaper-utils libpaper1 libpotrace0 libptexenc1
+  libsynctex2 libteckit0 libtexlua53-5 libzzip-0-13t64 poppler-utils t1utils
+  tex-common texlive-base texlive-binaries texlive-fonts-recommended
+  texlive-latex-base texlive-latex-recommended texlive-pictures xdg-utils
+0 upgraded, 20 newly installed, 0 to remove and 1 not upgraded.
+Need to get 68.0 MB of archives.
+After this operation, 234 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble/universe amd64 fonts-lmodern all 2.005-1 [4799 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble/main amd64 libkpathsea6 amd64 2023.20230311.66589-9build3 [63.0 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 libpaper1 amd64 1.1.29build1 [13.4 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 libpaper-utils amd64 1.1.29build1 [8650 B]
+Get:5 http://archive.ubuntu.com/ubuntu noble/universe amd64 libpotrace0 amd64 1.16-2build1 [17.7 kB]
+Get:6 http://archive.ubuntu.com/ubuntu noble/main amd64 libptexenc1 amd64 2023.20230311.66589-9build3 [40.4 kB]
+Get:7 http://archive.ubuntu.com/ubuntu noble/main amd64 libsynctex2 amd64 2023.20230311.66589-9build3 [59.6 kB]
+Get:8 http://archive.ubuntu.com/ubuntu noble/universe amd64 libteckit0 amd64 2.5.12+ds1-1 [411 kB]
+Get:9 http://archive.ubuntu.com/ubuntu noble/main amd64 libtexlua53-5 amd64 2023.20230311.66589-9build3 [123 kB]
+Get:10 http://archive.ubuntu.com/ubuntu noble/universe amd64 libzzip-0-13t64 amd64 0.13.72+dfsg.1-1.2build1 [28.1 kB]
+Ign:11 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 poppler-utils amd64 24.02.0-1ubuntu9.8
+Get:12 http://archive.ubuntu.com/ubuntu noble/main amd64 t1utils amd64 1.41-4build3 [61.3 kB]
+Get:13 http://archive.ubuntu.com/ubuntu noble/universe amd64 tex-common all 6.18 [32.8 kB]
+Err:11 http://security.ubuntu.com/ubuntu noble-updates/main amd64 poppler-utils amd64 24.02.0-1ubuntu9.8
+  404  Not Found [IP: 91.189.92.24 80]
+Get:14 http://archive.ubuntu.com/ubuntu noble/universe amd64 texlive-binaries amd64 2023.20230311.66589-9build3 [8529 kB]
+Get:15 http://archive.ubuntu.com/ubuntu noble/main amd64 xdg-utils all 1.1.3-4.1ubuntu3 [62.0 kB]
+Get:16 http://archive.ubuntu.com/ubuntu noble/universe amd64 texlive-base all 2023.20240207-1 [21.7 MB]
+Get:17 http://archive.ubuntu.com/ubuntu noble/universe amd64 texlive-fonts-recommended all 2023.20240207-1 [4973 kB]
+Get:18 http://archive.ubuntu.com/ubuntu noble/universe amd64 texlive-latex-base all 2023.20240207-1 [1238 kB]
+Get:19 http://archive.ubuntu.com/ubuntu noble/universe amd64 texlive-latex-recommended all 2023.20240207-1 [8826 kB]
+Get:20 http://archive.ubuntu.com/ubuntu noble/universe amd64 texlive-pictures all 2023.20240207-1 [16.7 MB]
+Fetched 67.7 MB in 5s (13.6 MB/s)
+
+--- stderr ---
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/p/poppler/poppler-utils_24.02.0-1ubuntu9.8_amd64.deb  404  Not Found [IP: 91.189.92.24 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?

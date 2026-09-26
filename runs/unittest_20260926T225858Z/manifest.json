@@ -1,0 +1,12 @@
+{
+  "command": "python3 -m unittest discover -s tests -v",
+  "git_commit": "84282923d994a38ccfb3b92ba8e8924d3294c9db",
+  "note": "src/ and tests/ identical to this commit at test time (git diff empty); paper/ files were uncommitted",
+  "exit_code": 0,
+  "tests_ran": 56,
+  "result_line": "OK",
+  "wall_time_s": 18.96,
+  "skipped": 0,
+  "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]",
+  "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39"
+}

@@ -28,6 +28,7 @@ CfgNewCells	9	configs/p2_stage2_moment_normalizer_diag.json	teachers x resamples
 CfgMCSamples	20000	configs/p2_stage2_moment_normalizer_diag.json	monte_carlo_check.n_samples	20000
 CfgPresentThr	0.02	configs/p2_stage2_moment_normalizer_diag.json	decision_rules.problem_present (threshold +0.02, parsed from text)	0.02
 CfgDualIters	300	configs/cpu_synthetic.json	dual.iters	300
+CfgRefineSkip	1\times10^{-9}	src/lowrank_merge/minimax.py	RefineConfig.skip_if_gap_rel (code default; not overridden in configs/cpu_synthetic.json)	'1\\times10^{-9}'
 CfgPolishIters	200	configs/cpu_synthetic.json	dual.polish_iters	200
 STwoCellsOK	78	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	cell_status_counts.OK	78
 STwoCellsTotal	78	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	sum(cell_status_counts)	78
@@ -128,3 +129,28 @@ STwoMinimaxCPUMedian	3.7	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/
 STwoMinimaxCPUMax	19.8	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	max(rows[method=minimax_rel].cpu_s)	19.760664923000007
 STwoUniformCPUMedianMs	8	runs/p2_stage2_moment_normalizer_diag_20260926T155649Z/results.json	1000*median(rows[method=wrrr_uniform_rel].cpu_s)	7.9985349999986965
 SOneMinimaxRawMean	0.857499	runs/cpu_synthetic_layer_fixture_20260926T152312Z/results.json	per_method.minimax_rel.test_worst_rel.mean	0.8574992618029383
+SThreeStatus	COMPLETED	runs/p2_stage3_bound_check_20260926T225217Z/results.json	status	'COMPLETED'
+SThreeCPU	216.1	runs/p2_stage3_bound_check_20260926T225217Z/manifest.json	cpu_time_s	216.114026743
+SThreeNRefits	27	runs/p2_stage3_bound_check_20260926T225217Z/results.json	n_refits	27
+SThreeNHashMatch	27	runs/p2_stage3_bound_check_20260926T225217Z/results.json	n_hash_match	27
+CfgNDrawsBound	4	configs/p2_stage3_bound_check.json	len(draws)	4
+SThreeMinBoundOverExcess	61	runs/p2_stage3_bound_check_20260926T225217Z/results.json	min(rows[].bound_over_excess)	61.04702881449436
+SThreePointwiseMaxRatio	0.27	runs/p2_stage3_bound_check_20260926T225217Z/results.json	max(rows[].pointwise[].lhs / rhs)	0.2697826770136487
+SThreePointwiseMedianRatio	0.034	runs/p2_stage3_bound_check_20260926T225217Z/results.json	median(rows[].pointwise[].lhs / rhs)	0.03409804300906322
+SThreeRelOpErrMin	0.64	runs/p2_stage3_bound_check_20260926T225217Z/results.json	min over cells of max_k rel_op_err	0.6400103451187316
+SThreeRelOpErrMax	1.04	runs/p2_stage3_bound_check_20260926T225217Z/results.json	max over cells of max_k rel_op_err	1.0440487398262495
+SThreeExcessEEMedian	0.164	runs/p2_stage3_bound_check_20260926T225217Z/results.json	median(rows[arm=emp_moment__emp_norm].excess)	0.16358150315112133
+SThreeMaxEps	3.8\times10^{-10}	runs/p2_stage3_bound_check_20260926T225217Z/results.json	max(rows[].eps_opt)	'3.8\\times10^{-10}'
+SThreeWall	217.6	runs/p2_stage3_bound_check_20260926T225217Z/manifest.json	wall_time_s	217.62896301299998
+SThreeRSS	23.4	runs/p2_stage3_bound_check_20260926T225217Z/manifest.json	peak_rss_bytes/2^20	23.3515625
+SThreeCPUCap	1100	runs/p2_stage3_bound_check_20260926T225217Z/manifest.json	caps.RLIMIT_CPU[0]	1100
+SThreeCommit	8428292	runs/p2_stage3_bound_check_20260926T225217Z/manifest.json	git.commit	'8428292'
+SThreeMaxAbsFPopDiffVsRecorded	0.000	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.max_abs_F_pop_diff_vs_recorded	0.0
+SThreeMaxExcess	0.484	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.max_excess	0.4841461230540418
+SThreeMedianB	5.274	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.median_B	5.274445413450886
+SThreeMedianMaxRelOpErr	0.727	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.median_max_rel_op_err	0.7265334728506138
+SThreeMinBound	14.026	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.min_bound	14.02585483071591
+SThreeNBoundsHold	24	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.n_bounds_hold	24
+SThreeNCells	24	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.n_cells	24
+SThreeNPointwiseChecks	192	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.n_pointwise_checks	192
+SThreeNPointwiseHold	192	runs/p2_stage3_bound_check_20260926T225217Z/results.json	summary.n_pointwise_hold	192

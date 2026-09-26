@@ -1,10 +1,10 @@
 # STATUS: P2 Low-Rank Model Merging Under Worst-Task Functional Error
 
-최종 갱신: 2026-09-26 (UTC), stage 2 반영 (§9)
+최종 갱신: 2026-09-26 (UTC), stage 3과 원고 v0 반영 (§10)
 
 | 구분 | 상태 |
 |---|---|
-| 소프트웨어 | **TECHNICAL_TEST_PASS**: 단위 테스트 54개 통과(기존 46개는 수정 없음, 신규 8개). stage-1 CPU fixture COMPLETED. stage-2 진단 COMPLETED(78/78 cell) |
+| 소프트웨어 | **TECHNICAL_TEST_PASS**: 단위 테스트 56개 통과(stage 3에서 bound property test 2개 추가). stage-1 fixture, stage-2 진단(78/78), stage-3 bound 점검(24/24) 모두 COMPLETED |
 | 과학 | **SCIENCE_NOT_EVALUATED**: 실제 adapter 실험 없음. 합성 fixture 결과와 stage-2 진단은 개발 진단이며 증거가 아님 |
 | stage-2 원인 분리 | solver 실패, evaluator 불일치, 분모 잡음 단독 설명은 **반박**. empirical moment 잡음이 가장 유력하나 사전 규칙상 **CAUSE_UNDETERMINED**(§9) |
 | 주 기준선 | **uniform WRRR 유지**: empirical minimax는 새 draw 평균에서도 이득이 없음(+0.0065). 합성 문제 한정 |
@@ -260,3 +260,19 @@ C가 null(S) 방향으로 새면 목적함수가 아래로 무한히 내려간�
   - 게시자 보고에 따르면 LoRA-CoLA는 CoLA에서 base와 같은 69.1이다. 그래서 "adapter 대비 normalized accuracy"로는 CoLA를 해석할 수 없다.
   - 기존 파일럿 config는 보존했으며 이번 단계에서 수정하지 않았다.
 - 이 자산들은 이번 실험 입력에서 제외했다. 다른 adapter를 탐색하거나 직접 학습하지 않았다.
+
+## 10. Stage 3: bound 수치 점검과 원고 Working Draft v0
+
+짧은 보고는 `reports/p2_stage3_bound_check.md`, 원고 상태는 `paper/PAPER_STATUS.md`에 있다.
+
+| 항목 | 내용 |
+|---|---|
+| 원고 | `paper/main.pdf` (ICLR 2027 공식 style, anonymous, 제출하지 않은 내부 draft). 전체 16쪽이고 본문은 9쪽이다. 경고 0개 |
+| bound 점검 | 부등식이 전부 성립했다(24/24, pointwise 192/192). 다만 61배 이상 느슨해 정보가 없다. 재생성한 행렬 27개의 SHA-256이 모두 일치했다 |
+| 비교 대상 정정 | 0.713/0.802/1.057과 0.726/0.768/1.081은 같은 minimax 해의 sample 평가와 population 평가다. 두 방법의 비교가 아니다 |
+| 정정 이력 | `CORRECTIONS.md`: §4 표의 0.858은 0.857로, stage-2 보고의 3.03은 3.38로 정정한다. 원래 문장은 수정하지 않고 보존했다 |
+| 원인 판정 | 사전 규칙에 따라 **CAUSE_UNDETERMINED**를 유지한다. moment 잡음은 oracle 치환 결과와 부합하는 가설일 뿐 확정 원인이 아니다 |
+| 기준선 | uniform WRRR를 주 기준선으로 유지한다 |
+| 실제 adapter | BLOCKED를 유지한다(사용권, base revision, checkpoint split 미확인). 게시자 exact-match accuracy와 GLUE 공식 metric이 다르다(CoLA는 MCC, MRPC는 acc/F1) |
+| 도구 설치 | 최소 TeX Live와 poppler를 apt로 설치했다. 1차 실패는 보존했고 2차에 성공했다(`paper/BUILD.md`) |
+| 하지 않은 것 | shrinkage, robust loss, sweep, 대형 포팅, 다른 adapter 탐색과 학습, 제출, PR |

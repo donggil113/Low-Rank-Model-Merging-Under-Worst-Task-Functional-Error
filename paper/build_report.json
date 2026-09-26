@@ -1,0 +1,16 @@
+{
+ "status": "BUILT",
+ "build_cpu_spent_total_s": 14.073761,
+ "budget_s": 600.0,
+ "engine": "This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.26)  26 SEP 2026 22:58",
+ "undefined_references": 0,
+ "undefined_citations": 0,
+ "overfull_hbox": 0,
+ "underfull_hbox": 8,
+ "latex_warnings": 0,
+ "bibtex_warnings": 0,
+ "bibtex_errors": 0,
+ "pages_total": 16,
+ "main_text_ends_on_page": 9,
+ "main_text_starts_on_page": 1
+}

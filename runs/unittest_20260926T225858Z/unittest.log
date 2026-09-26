@@ -1,0 +1,65 @@
+test_lemma1_and_lemma3_hold_on_random_instances (test_bound_check.TestLemmas.test_lemma1_and_lemma3_hold_on_random_instances) ... ok
+test_op_norm_matches_largest_abs_eigenvalue (test_bound_check.TestLemmas.test_op_norm_matches_largest_abs_eigenvalue) ... ok
+test_shape_mismatch_rejected (test_gauge_accounting.TestAdapterValidation.test_shape_mismatch_rejected) ... ok
+test_all_delta_based_methods_invariant_factor_average_not (test_gauge_accounting.TestGaugeInvariance.test_all_delta_based_methods_invariant_factor_average_not) ... ok
+test_effective_delta_invariant (test_gauge_accounting.TestGaugeInvariance.test_effective_delta_invariant) ... ok
+test_ill_conditioned_gauge_degrades_only_by_rounding (test_gauge_accounting.TestGaugeInvariance.test_ill_conditioned_gauge_degrades_only_by_rounding) ... ok
+test_ctm_like_full_rank_is_ta_and_hooi_improves_fit (test_gauge_accounting.TestRankAndAccounting.test_ctm_like_full_rank_is_ta_and_hooi_improves_fit) ... ok
+test_factorize_roundtrip (test_gauge_accounting.TestRankAndAccounting.test_factorize_roundtrip) ... ok
+test_final_rank_within_budget (test_gauge_accounting.TestRankAndAccounting.test_final_rank_within_budget) ... ok
+test_knots_ta_equals_task_arithmetic (test_gauge_accounting.TestRankAndAccounting.test_knots_ta_equals_task_arithmetic)
+Stoica et al. (2025) Sec. 5.1: KnOTS with linear averaging is TA. ... ok
+test_param_accounting (test_gauge_accounting.TestRankAndAccounting.test_param_accounting) ... ok
+test_regmean_full_rank_exceeds_budget (test_gauge_accounting.TestRankAndAccounting.test_regmean_full_rank_exceeds_budget) ... ok
+test_evaluate_per_task_and_summary (test_gauge_accounting.TestSplitsAndEvaluation.test_evaluate_per_task_and_summary) ... ok
+test_splits_are_disjoint_streams_and_stable (test_gauge_accounting.TestSplitsAndEvaluation.test_splits_are_disjoint_streams_and_stable) ... ok
+test_eckart_young_error (test_linalg.TestLinalg.test_eckart_young_error) ... ok
+test_solve_and_inv (test_linalg.TestLinalg.test_solve_and_inv) ... ok
+test_svd_tall_wide_and_rank_deficient (test_linalg.TestLinalg.test_svd_tall_wide_and_rank_deficient) ... ok
+test_sym_eig_reconstructs_and_orthonormal (test_linalg.TestLinalg.test_sym_eig_reconstructs_and_orthonormal) ... ok
+test_bounds_bracket_grid_ellipsoid_reference (test_minimax.TestBoundsAgainstReference.test_bounds_bracket_grid_ellipsoid_reference) ... ok
+test_refinement_is_monotone_and_rank_feasible (test_minimax.TestBoundsAgainstReference.test_refinement_is_monotone_and_rank_feasible) ... ok
+test_ridge_refused_for_dual_bound (test_minimax.TestBoundsAgainstReference.test_ridge_refused_for_dual_bound) ... ok
+test_weak_duality_against_random_feasible_points (test_minimax.TestBoundsAgainstReference.test_weak_duality_against_random_feasible_points) ... ok
+test_full_rank_convex_case_closes_gap (test_minimax.TestKnownSolutions.test_full_rank_convex_case_closes_gap) ... ok
+test_published_nonzero_gap_instance (test_minimax.TestKnownSolutions.test_published_nonzero_gap_instance)
+Tantipongpipat et al. (NeurIPS 2019), Lemma 6.2, k=3 groups, d=1. ... ok
+test_single_task_equals_eckart_young (test_minimax.TestKnownSolutions.test_single_task_equals_eckart_young) ... ok
+test_symmetric_two_task_rank1 (test_minimax.TestKnownSolutions.test_symmetric_two_task_rank1)
+D1 = e1 e1^T, D2 = e2 e2^T, Sigma = I, k = 1: OPT = 3/4 at ... ok
+test_two_group_projection_case_has_zero_gap (test_minimax.TestKnownSolutions.test_two_group_projection_case_has_zero_gap)
+D_t = I, T = 2: the SDP relaxation is exact (Tantipongpipat et al. ... ok
+test_blocked_on_approval_license_and_pins (test_pilot_config.TestPilotConfig.test_blocked_on_approval_license_and_pins) ... ok
+test_cli_writes_report_and_exits_nonzero_when_blocked (test_pilot_config.TestPilotConfig.test_cli_writes_report_and_exits_nonzero_when_blocked) ... ok
+test_config_is_complete (test_pilot_config.TestPilotConfig.test_config_is_complete) ... ok
+test_every_method_discloses_access (test_pilot_config.TestPilotConfig.test_every_method_discloses_access) ... ok
+test_validation_catches_mistakes (test_pilot_config.TestPilotConfig.test_validation_catches_mistakes) ... ok
+test_classify_rules (test_population_diag.TestDiagnosticLogic.test_classify_rules) ... ok
+test_pop_pop_fit_is_consistent_and_audited (test_population_diag.TestDiagnosticLogic.test_pop_pop_fit_is_consistent_and_audited) ... ok
+test_closed_form_matches_generator_monte_carlo (test_population_diag.TestPopulationMoments.test_closed_form_matches_generator_monte_carlo) ... ok
+test_empirical_arm_equals_existing_relative_task (test_population_diag.TestPopulationMoments.test_empirical_arm_equals_existing_relative_task) ... ok
+test_population_evaluator_matches_quadform (test_population_diag.TestPopulationMoments.test_population_evaluator_matches_quadform) ... ok
+test_resample_is_new_and_deterministic (test_population_diag.TestPopulationMoments.test_resample_is_new_and_deterministic) ... ok
+test_small_full_run_completes (test_population_diag.TestRunDiagCaps.test_small_full_run_completes) ... ok
+test_tiny_cap_records_not_run_instead_of_starting (test_population_diag.TestRunDiagCaps.test_tiny_cap_records_not_run_instead_of_starting) ... ok
+test_tiny_run_writes_all_artifacts (test_run_cpu_smoke.TestRunCpuSmoke.test_tiny_run_writes_all_artifacts) ... ok
+test_gram_form_equals_raw_samples (test_wrrr.TestObjective.test_gram_form_equals_raw_samples) ... ok
+test_pd_mode_refuses (test_wrrr.TestSingularGram.test_pd_mode_refuses) ... ok
+test_pinv_is_exact_minimiser_on_range_and_zero_on_null (test_wrrr.TestSingularGram.test_pinv_is_exact_minimiser_on_range_and_zero_on_null) ... ok
+test_ridge_changes_objective_and_converges_to_pinv (test_wrrr.TestSingularGram.test_ridge_changes_objective_and_converges_to_pinv) ... ok
+test_ridge_requires_explicit_mode (test_wrrr.TestSingularGram.test_ridge_requires_explicit_mode) ... ok
+test_unbounded_objective_detected (test_wrrr.TestSingularGram.test_unbounded_objective_detected) ... ok
+test_matches_grid_search_rank1_2d (test_wrrr.TestWRRRAgainstReferences.test_matches_grid_search_rank1_2d) ... ok
+test_matches_izenman_raw_data_rrr (test_wrrr.TestWRRRAgainstReferences.test_matches_izenman_raw_data_rrr) ... ok
+test_never_beaten_by_multistart_als (test_wrrr.TestWRRRAgainstReferences.test_never_beaten_by_multistart_als) ... ok
+test_full_rank_is_weighted_regmean (test_wrrr.TestWRRRSpecialCases.test_full_rank_is_weighted_regmean) ... ok
+test_identity_covariances_uniform_weights_is_ta_svd (test_wrrr.TestWRRRSpecialCases.test_identity_covariances_uniform_weights_is_ta_svd) ... ok
+test_k_zero_is_zero (test_wrrr.TestWRRRSpecialCases.test_k_zero_is_zero) ... ok
+test_nonunique_truncation_is_flagged (test_wrrr.TestWRRRSpecialCases.test_nonunique_truncation_is_flagged) ... ok
+test_single_task_exact_recovery_when_k_ge_rank (test_wrrr.TestWRRRSpecialCases.test_single_task_exact_recovery_when_k_ge_rank) ... ok
+test_single_task_identity_cov_is_eckart_young (test_wrrr.TestWRRRSpecialCases.test_single_task_identity_cov_is_eckart_young) ... ok
+
+----------------------------------------------------------------------
+Ran 56 tests in 18.852s
+
+OK

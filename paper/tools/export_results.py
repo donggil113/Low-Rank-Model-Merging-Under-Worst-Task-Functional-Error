@@ -102,6 +102,12 @@ def main():
       "decision_rules.problem_present (threshold +0.02, parsed from text)")
     assert "+0.02" in c2["decision_rules"]["problem_present"]
     m("CfgDualIters", c1["dual"]["iters"], "d", "configs/cpu_synthetic.json", "dual.iters")
+    import sys
+    sys.path.insert(0, os.path.join(ROOT, "src"))
+    from lowrank_merge.minimax import RefineConfig
+    m("CfgRefineSkip", sci(RefineConfig().skip_if_gap_rel, 0), "s", "src/lowrank_merge/minimax.py",
+      "RefineConfig.skip_if_gap_rel (code default; not overridden in configs/cpu_synthetic.json)")
+    assert "skip_if_gap_rel" not in c1["refine"]
     m("CfgPolishIters", c1["dual"]["polish_iters"], "d", "configs/cpu_synthetic.json", "dual.polish_iters")
 
     # ---------------- stage 2: bookkeeping -----------------------------------
@@ -218,6 +224,26 @@ def main():
         m("SThreeCPU", s3m["cpu_time_s"], ".1f", f"{s3p}/manifest.json", "cpu_time_s")
         m("SThreeNRefits", s3["n_refits"], "d", src3, "n_refits")
         m("SThreeNHashMatch", s3["n_hash_match"], "d", src3, "n_hash_match")
+        c3 = load("configs/p2_stage3_bound_check.json")
+        m("CfgNDrawsBound", len(c3["draws"]), "d", "configs/p2_stage3_bound_check.json", "len(draws)")
+        okr = [r for r in s3["rows"] if r["status"] == "OK"]
+        m("SThreeMinBoundOverExcess", min(r["bound_over_excess"] for r in okr if r["bound_over_excess"]), ".0f",
+          src3, "min(rows[].bound_over_excess)")
+        pw = [p for r in okr for p in r["pointwise"]]
+        m("SThreePointwiseMaxRatio", max(p["lhs"] / p["rhs"] for p in pw), ".2f", src3,
+          "max(rows[].pointwise[].lhs / rhs)")
+        m("SThreePointwiseMedianRatio", statistics.median(p["lhs"] / p["rhs"] for p in pw), ".3f", src3,
+          "median(rows[].pointwise[].lhs / rhs)")
+        rel = [max(r["rel_op_err"]) for r in okr]
+        m("SThreeRelOpErrMin", min(rel), ".2f", src3, "min over cells of max_k rel_op_err")
+        m("SThreeRelOpErrMax", max(rel), ".2f", src3, "max over cells of max_k rel_op_err")
+        ee = [r["excess"] for r in okr if r["arm"] == "emp_moment__emp_norm"]
+        m("SThreeExcessEEMedian", statistics.median(ee), ".3f", src3, "median(rows[arm=emp_moment__emp_norm].excess)")
+        m("SThreeMaxEps", sci(max(r["eps_opt"] for r in okr)), "s", src3, "max(rows[].eps_opt)")
+        m("SThreeWall", s3m["wall_time_s"], ".1f", f"{s3p}/manifest.json", "wall_time_s")
+        m("SThreeRSS", s3m["peak_rss_bytes"] / 2**20, ".1f", f"{s3p}/manifest.json", "peak_rss_bytes/2^20")
+        m("SThreeCPUCap", s3m["caps"]["RLIMIT_CPU"][0], "d", f"{s3p}/manifest.json", "caps.RLIMIT_CPU[0]")
+        m("SThreeCommit", s3m["git"]["commit"][:7], "s", f"{s3p}/manifest.json", "git.commit")
         for k_, v in s3["summary"].items():
             name = "SThree" + "".join(p.capitalize() for p in k_.split("_"))
             if isinstance(v, float):
@@ -359,15 +385,16 @@ def write_figure(by):
     # axis
     out.append(f"\\draw[black!60] (0,0) -- (0,{H:.3f});")
     for v in [0.45, 0.55, 0.65, 0.75, 0.85]:
-        out.append(f"\\draw[black!15] (0,{y(v):.3f}) -- (12.6,{y(v):.3f});")
+        out.append(f"\\draw[black!15] (0,{y(v):.3f}) -- (12.1,{y(v):.3f});")
         out.append(f"\\node[anchor=east,text=black!70] at (0,{y(v):.3f}) {{{v:.2f}}};")
     out.append(f"\\node[rotate=90,anchor=south,text=black!80] at (-0.9,{H/2:.3f}) {{population worst-task $F$}};")
     for i, (key, label, _) in enumerate(ARMS):
-        x0 = 0.6 + i * 3.1
+        x0 = 0.55 + i * 3.0
         xu, xm = x0, x0 + 1.6
         out.append(f"\\node[anchor=north,text=black!80] at ({(xu + xm) / 2:.2f},-0.35) {{{label}}};")
         out.append(f"\\node[anchor=north,text=black!55] at ({xu:.2f},-0.02) {{U}};")
         out.append(f"\\node[anchor=north,text=black!55] at ({xm:.2f},-0.02) {{M}};")
+        labels = []
         for t in (0, 1, 2):
             if key == "pop_moment__pop_norm":
                 u = by[(t, "all_draws", key, "wrrr_uniform_rel")]["F_pop"]
@@ -379,7 +406,13 @@ def write_figure(by):
             out.append(f"\\fill[unifc,draw=white,line width=0.4pt] ({xu:.2f},{y(u):.3f}) circle (2.2pt);")
             out.append(f"\\fill[minic,draw=white,line width=0.4pt] ({xm - 0.075:.3f},{y(mm) - 0.075:.3f}) "
                        f"rectangle ({xm + 0.075:.3f},{y(mm) + 0.075:.3f});")
-            out.append(f"\\node[anchor=west,text=black!70,font=\\scriptsize] at ({xm + 0.12:.2f},{y(mm):.3f}) {{{t}}};")
+            labels.append([y(mm), t])
+        # push teacher labels apart so they never overlap (min 0.24 cm)
+        labels.sort()
+        for j in range(1, len(labels)):
+            labels[j][0] = max(labels[j][0], labels[j - 1][0] + 0.24)
+        for ly, t in labels:
+            out.append(f"\\node[anchor=west,text=black!70,font=\\scriptsize] at ({xm + 0.12:.2f},{ly:.3f}) {{{t}}};")
     # legend
     out.append(f"\\fill[unifc] (0.4,{H + 0.45:.3f}) circle (2.2pt);")
     out.append(f"\\node[anchor=west] at (0.55,{H + 0.45:.3f}) {{U: uniform WRRR}};")
