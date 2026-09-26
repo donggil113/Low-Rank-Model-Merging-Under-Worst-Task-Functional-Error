@@ -1,0 +1,11 @@
+{
+  "command": "python3 -m unittest discover -s tests -v",
+  "git_commit": "15829866d27a108d360a83f71b42eeeae7e016d3",
+  "exit_code": 0,
+  "tests_ran": 54,
+  "result_line": "OK",
+  "wall_time_s": 15.07617473602295,
+  "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]",
+  "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
+  "skipped": 0
+}
